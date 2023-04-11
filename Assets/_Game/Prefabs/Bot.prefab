@@ -282,7 +282,7 @@ MonoBehaviour:
   _rigidbody: {fileID: 150299906387014385}
   _moveSpeed: 0
   _rotateSpeed: 0
-  force_Throw: 200
+  _forceThrow: 200
   bulletPrefab: {fileID: 2031860895177601055, guid: 1b1251c7cd1c8b34ea30386c4e5ce4ac, type: 3}
   throwPoint: {fileID: 150299905252888459}
   l_AttackTarget: []
