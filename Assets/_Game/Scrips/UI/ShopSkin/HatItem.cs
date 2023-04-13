@@ -6,12 +6,12 @@ using UnityEngine.UI;
 
 public class HatItem : MonoBehaviour
 {
-    public Image icon;
-    public int id;
+    //public Image icon;
+    //public int id;
 
-    internal void SetData(HatData hatData)
-    {
+    //internal void SetData(HatData hatData)
+    //{
 
-    }
+    //}
 
 }

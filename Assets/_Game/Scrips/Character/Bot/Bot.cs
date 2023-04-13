@@ -8,6 +8,7 @@ using UnityEngine.AI;
 public class Bot : Character
 {
     [SerializeField] Transform spawnPosTrans;
+    [SerializeField] GameObject skin;
     private NavMeshAgent agent;
     public Transform targetFollow;
 
@@ -45,6 +46,14 @@ public class Bot : Character
     public void FollowTarget() //neu vi tri diem den hon 1f voi target thi cap nhat cho vi tri diem den 
     {
         ChangeAnim(Constan.ANIM_RUN);
+        Bot bot;
+        if (targetFollow.TryGetComponent<Bot>(out bot))
+        {
+            if (bot.CurrentState is DieState)
+            {
+                SetRandomTargetFollow();
+            }
+        }
         if (Vector3.Distance(destination, targetFollow.position) > 1.0f)
         {
             destination = targetFollow.position;
@@ -72,7 +81,7 @@ public class Bot : Character
 
         }
       
-        targetFollow = l_targetFollow[Random.Range(0, l_targetFollow.Count)];
+        targetFollow = targets[Random.Range(0, targets.Count)];
         destination = targetFollow.position;
         agent.destination = destination;
     }
@@ -105,15 +114,23 @@ public class Bot : Character
     public void Despawn()
     {
         //TODO
+        //ChangeAnim(Constan.ANIM_DEAD);
+        skin.SetActive(false);
+        if (!GameManager.GetInstance().IsSpawnEnemy())
+        {
+            return;
+        }
+        GameManager.GetInstance().NumSpawn -= 1;
         OnInit();
-
-        transform.position = spawnPos;
+        //transform.position = GameController.GetInstance().GetRandomSpawnPos();
+        transform.position = GameManager.GetInstance().GetRandomSpawnPos();
     }
 
     public override void OnDeath()
     {
         //TODO
         base.OnDeath();
+        GameManager.GetInstance().UpdateAliveText();
     }
 
     public void StopMoving()

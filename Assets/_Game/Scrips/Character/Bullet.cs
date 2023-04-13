@@ -10,6 +10,7 @@ public class Bullet : MonoBehaviour
     private float timer = 0;
     private float timeExist = 3f;
     Character character;
+    public string tagWeapon;
 
     public float Timer { get => timer; set => timer = value; }
 
@@ -22,7 +23,8 @@ public class Bullet : MonoBehaviour
         timer += Time.deltaTime;
         if (timer > timeExist)
         {
-            Pooling.GetInstance().ReturnGameObject(this.gameObject);
+            //Pooling.GetInstance().ReturnGameObject(this.gameObject);
+            PoolingPro.GetInstance().ReturnToPool(tagWeapon, gameObject);
         }
         transform.Rotate(rotateSpeed, 0, 0);
     }
@@ -35,12 +37,19 @@ public class Bullet : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            character = other.GetComponent<Character>();
-            Pooling.GetInstance().ReturnGameObject(this.gameObject);
-            if (character is Bot)
-            {
-                other.GetComponent<Bot>().ChangeState(new DieState());
-            }
+            //character = other.GetComponent<Character>();
+            //Pooling.GetInstance().ReturnGameObject(this.gameObject);
+            //if (character is Bot)
+            //{
+            //    other.GetComponent<Bot>().ChangeState(new DieState());
+            //}
+            PoolingPro.GetInstance().ReturnToPool(tagWeapon, gameObject);
+        }
+
+        if (other.tag == "Bot")
+        {
+            PoolingPro.GetInstance().ReturnToPool(tagWeapon, gameObject);
+            other.GetComponent<Bot>().ChangeState(new DieState());
         }
     }
 

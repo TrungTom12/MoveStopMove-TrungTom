@@ -16,6 +16,8 @@ public class Player : Character
     protected override void Start()
     {
         base.Start();
+        _joystick = FindAnyObjectByType<FixedJoystick>();
+        //GameManager.GetInstance()
         OnInit();
     }
 

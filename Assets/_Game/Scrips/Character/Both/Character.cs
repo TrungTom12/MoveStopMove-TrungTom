@@ -27,6 +27,7 @@ public class Character : MonoBehaviour
     protected float delayAttack = 0.1f;
 
     protected Character targetAttack;
+    [SerializeField] private string tagWeapon;
 
     protected virtual void Start()
     {
@@ -53,7 +54,7 @@ public class Character : MonoBehaviour
         //dinh huong den doi tuong
         //tinh khoang cach tu diem ban toi doi tuong
         SetTargetDirect(targetAttack.transform.position); 
-        ChangeAnim("attack");
+        ChangeAnim(Constan.ANIM_ATTACK);
         isReadyAttack = false;
         Vector3 direct = throwPoint.position - transform.position;
         StartCoroutine(Throw(direct));
@@ -67,7 +68,8 @@ public class Character : MonoBehaviour
         //dinh huong quay
         //them luc cho bullet
         yield return new WaitForSeconds(waitThrow);
-        GameObject bullet = Pooling.GetInstance().GetGameObject(throwPoint.position);
+        GameObject bullet = PoolingPro.GetInstance().GetFromPool(tagWeapon,throwPoint.position);
+        bullet.GetComponent<Bullet>().tagWeapon = tagWeapon;
         bullet.transform.rotation = transform.rotation;
         bullet.GetComponent<Rigidbody>().AddForce(direct.x * _forceThrow, 0, direct.z * _forceThrow);
 
@@ -87,6 +89,7 @@ public class Character : MonoBehaviour
 
             anim.SetTrigger(currentAnimName);
         }
+
     }
 
     ////TF

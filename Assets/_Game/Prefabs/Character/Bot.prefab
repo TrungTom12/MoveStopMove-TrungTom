@@ -163,7 +163,7 @@ GameObject:
   - component: {fileID: 150299906387014399}
   m_Layer: 0
   m_Name: Bot
-  m_TagString: Player
+  m_TagString: Bot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -286,8 +286,10 @@ MonoBehaviour:
   bulletPrefab: {fileID: 2031860895177601055, guid: 1b1251c7cd1c8b34ea30386c4e5ce4ac, type: 3}
   throwPoint: {fileID: 150299905252888459}
   l_AttackTarget: []
+  tagWeapon: Stick
   anim: {fileID: 3018907055225023586}
   spawnPosTrans: {fileID: 150299905545302748}
+  skin: {fileID: 8157168883553923851}
   targetFollow: {fileID: 0}
 --- !u!195 &150299906387014399
 NavMeshAgent:
@@ -456,5 +458,10 @@ Animator:
 --- !u!4 &5147416708458152216 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: 38f9296dc39c27647a0119314baf12a2, type: 3}
+  m_PrefabInstance: {fileID: 150299906137303554}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8157168883553923851 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: 38f9296dc39c27647a0119314baf12a2, type: 3}
   m_PrefabInstance: {fileID: 150299906137303554}
   m_PrefabAsset: {fileID: 0}

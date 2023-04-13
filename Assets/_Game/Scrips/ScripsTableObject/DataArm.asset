@@ -10,15 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9716247ab1a5b214c9a8656e4944c932, type: 3}
-  m_Name: Data1
+  m_Name: DataArm
   m_EditorClassIdentifier: 
-  hatDatas:
-  - idSkin: 0
-    name: 000
-    icon: {fileID: 21300000, guid: 81d14de217cff1e46b165cbe20862a92, type: 3}
+  nameData: Arm
+  id: 3
+  iDataSkin:
   - idSkin: 1
-    name: 111
-    icon: {fileID: 21300000, guid: 187e596a496fbc5429b8239cfa80b9f6, type: 3}
-  - idSkin: 2
-    name: 222
-    icon: {fileID: 21300000, guid: 91db99148a57cc2458302c7f30ed1a43, type: 3}
+    name: khien
+    price: 200
+    spriteIcon: {fileID: 21300000, guid: 9cd86c9a121a3a74b88bbc7a957a96aa, type: 3}
