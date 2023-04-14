@@ -114,7 +114,7 @@ public class Bot : Character
     public void Despawn()
     {
         //TODO
-        //ChangeAnim(Constan.ANIM_DEAD);
+        
         skin.SetActive(false);
         if (!GameManager.GetInstance().IsSpawnEnemy())
         {

@@ -7,7 +7,7 @@ public class GameManager : Singleton<GameManager>
 {
     [SerializeField] private int Alive;
     public int numBot = 10;
-
+    public CameraFollow cameraFollow;
     [SerializeField] private List <Transform> l_character = new List<Transform> ();
     public List<Transform> L_character { get => l_character; set => l_character = value; }
 
@@ -21,7 +21,7 @@ public class GameManager : Singleton<GameManager>
     private void Start()
     {
         GetInstance();
-        UIManager.GetInstance().SetAliveText (Alive);
+        UIManager.GetInstance().SetAliveText(Alive);
         numSpawn = Alive - numBot;
     }
 
@@ -33,7 +33,7 @@ public class GameManager : Singleton<GameManager>
     public void UpdateAliveText()
     {
         Alive -= 1;
-        UIManager.GetInstance().SetAliveText (Alive);
+        UIManager.GetInstance().SetAliveText(Alive);
     } 
 
     public Vector3 GetRandomSpawnPos()

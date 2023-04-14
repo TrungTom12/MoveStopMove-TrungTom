@@ -286,7 +286,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 2031860895177601055, guid: 1b1251c7cd1c8b34ea30386c4e5ce4ac, type: 3}
   throwPoint: {fileID: 150299905252888459}
   l_AttackTarget: []
-  tagWeapon: Stick
+  tagWeapon: Bullet
   anim: {fileID: 3018907055225023586}
   spawnPosTrans: {fileID: 150299905545302748}
   skin: {fileID: 8157168883553923851}
@@ -340,7 +340,7 @@ Transform:
   m_GameObject: {fileID: 150299906388632592}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -1, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 150299905567917649}

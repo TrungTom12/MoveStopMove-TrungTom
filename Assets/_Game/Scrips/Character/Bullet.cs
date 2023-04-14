@@ -5,10 +5,11 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    private float rotateSpeed = 5f;
-    private Rigidbody rb;
-    private float timer = 0;
-    private float timeExist = 3f;
+    protected float rotateSpeed = 10f;
+
+    protected Rigidbody rb;
+    protected float timer = 0;
+    protected float timeExist = 3f;
     Character character;
     public string tagWeapon;
 
@@ -18,7 +19,7 @@ public class Bullet : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
     }
-    void Update()
+    protected virtual void Update()
     {
         timer += Time.deltaTime;
         if (timer > timeExist)
@@ -26,7 +27,7 @@ public class Bullet : MonoBehaviour
             //Pooling.GetInstance().ReturnGameObject(this.gameObject);
             PoolingPro.GetInstance().ReturnToPool(tagWeapon, gameObject);
         }
-        transform.Rotate(rotateSpeed, 0, 0);
+        
     }
     public void ResetForce()
     {
@@ -44,6 +45,7 @@ public class Bullet : MonoBehaviour
             //    other.GetComponent<Bot>().ChangeState(new DieState());
             //}
             PoolingPro.GetInstance().ReturnToPool(tagWeapon, gameObject);
+            //other.GetComponent<Player>().OnDeath();
         }
 
         if (other.tag == "Bot")

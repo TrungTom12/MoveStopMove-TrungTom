@@ -60,16 +60,11 @@ public class PoolingPro : Singleton<PoolingPro>
 
         else if (tempPool.canGrow)
         {
-            GameObject go = objectPools[tag][0];
+            GameObject obj = objectPools[tag][0];
             objectPools[tag].RemoveAt(0);
-            return go;
-
-        }
-        else if (tempPool.canGrow)
-        {
-            GameObject obj = Instantiate(tempPool.poolObjectPrefab);
             return obj;
         }
+
         else
         {
             return null;
@@ -95,17 +90,32 @@ public class PoolingPro : Singleton<PoolingPro>
             go.transform.position = pos;
             go.SetActive(true);
             objectPools[tag].RemoveAt(0);
+            switch (tag)
+            {
+                case "Boomerang":
+                    go.GetComponent<Boomerang>().SetFirstPoint(pos);
+                    break;
 
+            }
             return go;
         }
+
         else if (tempPool.canGrow)
         {
             GameObject go = Instantiate(tempPool.poolObjectPrefab);
             go.transform.position = pos;
             go.SetActive(true);
             objectPools[tag].Remove(go);
+            switch (tag)
+            {
+                case "Boomerang":
+                    go.GetComponent<Boomerang>().SetFirstPoint(pos);
+                    break;
+
+            }
             return go;
         }
+
         else
         {
             return null;
@@ -126,7 +136,7 @@ public class PoolingPro : Singleton<PoolingPro>
         }
         switch (tag)
         {
-            case "Stick":
+            case "Bullet": // Toan charater
                 go.transform.rotation = tempPool.poolObjectPrefab.transform.rotation;
                 go.GetComponent<Bullet>().ResetForce();
                 go.GetComponent<Bullet>().Timer = 0;
@@ -134,7 +144,57 @@ public class PoolingPro : Singleton<PoolingPro>
                 objectPools[tag].Add(go);
                 go.SetActive(false);
                 break;
+
+            case "Bot":
+                go.transform.rotation = tempPool.poolObjectPrefab.transform.rotation;
+                activeObjectPools[tag].Remove(go);
+                objectPools[tag].Add(go);
+                go.SetActive(false);
+                break;
+
+            case "Player":
+                go.transform.rotation = tempPool.poolObjectPrefab.transform.rotation;
+                activeObjectPools[tag].Remove(go);
+                objectPools[tag].Add(go);
+                go.SetActive(false);
+                break;
+
+            case "Candy":
+                go.transform.rotation = tempPool.poolObjectPrefab.transform.rotation;
+                go.GetComponent<Bullet>().ResetForce();
+                go.GetComponent<Bullet>().Timer = 0;
+                activeObjectPools[tag].Remove(go);
+                objectPools[tag].Add(go);
+                go.SetActive(false);
+                break;
+
+            case "Boomerang":
+                go.transform.rotation = tempPool.poolObjectPrefab.transform.rotation;
+                go.GetComponent<Bullet>().ResetForce();
+                go.GetComponent<Bullet>().Timer = 0;
+                activeObjectPools[tag].Remove(go);
+                objectPools[tag].Add(go);
+                go.SetActive(false);
+                break;
+
+            case "Uzi":
+                go.transform.rotation = tempPool.poolObjectPrefab.transform.rotation;
+                go.GetComponent<Bullet>().ResetForce();
+                go.GetComponent<Bullet>().Timer = 0;
+                activeObjectPools[tag].Remove(go);
+                objectPools[tag].Add(go);
+                go.SetActive(false);
+                break;
+
+            case "Knife":
+                go.transform.rotation = tempPool.poolObjectPrefab.transform.rotation;
+                go.GetComponent<Bullet>().ResetForce();
+                go.GetComponent<Bullet>().Timer = 0;
+                activeObjectPools[tag].Remove(go);
+                objectPools[tag].Add(go);
+                go.SetActive(false);
+                break;
+
         }
     }
-
 }

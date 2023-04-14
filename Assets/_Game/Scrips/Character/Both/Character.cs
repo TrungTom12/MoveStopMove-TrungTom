@@ -29,6 +29,7 @@ public class Character : MonoBehaviour
     protected Character targetAttack;
     [SerializeField] private string tagWeapon;
 
+    
     protected virtual void Start()
     {
         characterCollider = GetComponent<Collider>();
@@ -105,5 +106,5 @@ public class Character : MonoBehaviour
     //        return tf;
     //    }
     //}
-
+    
 }

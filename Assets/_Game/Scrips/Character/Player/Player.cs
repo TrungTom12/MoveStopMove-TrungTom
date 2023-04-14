@@ -12,12 +12,14 @@ public class Player : Character
     private Vector3 moveVector;
     [SerializeField] private FixedJoystick _joystick;
     PlayerState _state;
+
+   
   
     protected override void Start()
     {
         base.Start();
         _joystick = FindAnyObjectByType<FixedJoystick>();
-        //GameManager.GetInstance()
+        GameManager.GetInstance().cameraFollow.SetTargetFollow(transform);
         OnInit();
     }
 
