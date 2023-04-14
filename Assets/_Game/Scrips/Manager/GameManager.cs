@@ -22,7 +22,7 @@ public class GameManager : Singleton<GameManager>
     {
         GetInstance();
         UIManager.GetInstance().SetAliveText (Alive);
-        numSpawn = Alive - l_character.Count + 1;
+        numSpawn = Alive - numBot;
     }
 
     public bool IsSpawnEnemy()

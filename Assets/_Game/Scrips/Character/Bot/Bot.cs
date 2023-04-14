@@ -105,7 +105,7 @@ public class Bot : Character
             if (!t.Equals(transform) && !l_targetFollow.Contains(t))
                 l_targetFollow.Add(t);
         }
-        //skin.SetActive(true);
+        skin.SetActive(true);
         //Debug.Log(l_targetFollow.Count);
         CharacterCollider.enabled = true;
         ChangeState(new IdleState());

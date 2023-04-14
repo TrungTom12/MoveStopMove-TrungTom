@@ -14,17 +14,17 @@ public class SpawnPos : MonoBehaviour
     private void OnTriggerStay(Collider other)
     {
         if (other.tag == "Player" || other.tag == "Bot")
-        {
+        
             IsHaveCharacter = true;
-        }
+        
     }
 
     private void OnTriggerExit(Collider other)
     {
         if (other.tag == "Player" || other.tag == "Bot")
-        {
+        
             IsHaveCharacter=false;
-        }
+        
     }
 
 
