@@ -13,7 +13,7 @@ public class Player : Character
     [SerializeField] private FixedJoystick _joystick;
     PlayerState _state;
 
-   
+    internal PlayerState MyState { get => _state; set => _state = value; }
   
     protected override void Start()
     {
@@ -76,7 +76,7 @@ public class Player : Character
             timer = 0;
             Vector3 direction = Vector3.RotateTowards(transform.forward, moveVector, _rotateSpeed * Time.deltaTime, 0.0f);
             transform.rotation = Quaternion.LookRotation(direction);
-            ChangeAnim("run");
+            ChangeAnim(Constan.ANIM_RUN);
         }
 
         else if (_joystick.Horizontal == 0 && _joystick.Vertical == 0 )
@@ -97,8 +97,17 @@ public class Player : Character
 
     public override void OnDeath()
     {
+        if (_state is PlayerState.Dead)
+        {
+            return;
+        }
         base.OnDeath();
         _state = PlayerState.Dead;
+        SaveLoadManager.GetInstance().Data1.Coin += point;
+        SaveLoadManager.GetInstance().Data1.WeaponCurrent = currentWeapon.ToString();
+        SaveLoadManager.GetInstance().Save();
+        Debug.Log("Now Coin: " + SaveLoadManager.GetInstance().Data1.Coin);
+        Debug.Log("Now Weapon: " + SaveLoadManager.GetInstance().Data1.WeaponCurrent);
     }
 
     //Attack

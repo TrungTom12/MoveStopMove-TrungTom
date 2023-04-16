@@ -2,6 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum CharacterType
+{
+    Player,Bot
+}
 public class Character : MonoBehaviour
 {
     //setup
@@ -27,9 +31,11 @@ public class Character : MonoBehaviour
     protected float delayAttack = 0.1f;
 
     protected Character targetAttack;
-    [SerializeField] private string tagWeapon;
-
-    
+    //[SerializeField] private string tagWeapon;
+    //UpPoint
+    protected int point = 0;
+    //Weapon
+    [SerializeField] protected WeaponType currentWeapon;
     protected virtual void Start()
     {
         characterCollider = GetComponent<Collider>();
@@ -68,12 +74,14 @@ public class Character : MonoBehaviour
         //lay bullet tu pooling tai vi tri 
         //dinh huong quay
         //them luc cho bullet
+        //nang Scale 
         yield return new WaitForSeconds(waitThrow);
-        GameObject bullet = PoolingPro.GetInstance().GetFromPool(tagWeapon,throwPoint.position);
-        bullet.GetComponent<Bullet>().tagWeapon = tagWeapon;
+        GameObject bullet = PoolingPro.GetInstance().GetFromPool(currentWeapon.ToString(),throwPoint.position);
+        bullet.GetComponent<Bullet>().tagWeapon = currentWeapon;
         bullet.transform.rotation = transform.rotation;
         bullet.GetComponent<Rigidbody>().AddForce(direct.x * _forceThrow, 0, direct.z * _forceThrow);
-
+        bullet.GetComponent<Bullet>().SetOwner(this);
+        bullet.transform.localScale *= (1 + 0.01f * point);
     }
 
     //Anim
@@ -92,6 +100,25 @@ public class Character : MonoBehaviour
         }
 
     }
+
+    public void UpPoint(int point)
+    {
+        this.point += point;
+        if (this is Player)
+        {
+            GameManager.GetInstance().cameraFollow.Offset += new Vector3(0, 1 - 1);
+        }
+        this.transform.localScale = Vector3.one * this.point * 0.1f + Vector3.one;
+    }
+
+    public void ChangeEquipment()
+    {
+
+    }
+
+
+
+
 
     ////TF
     //private Transform tf;

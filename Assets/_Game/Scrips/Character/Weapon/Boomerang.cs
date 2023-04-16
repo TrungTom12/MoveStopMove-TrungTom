@@ -24,7 +24,7 @@ public class Boomerang : Bullet
 
         if (timer > timeExist * 2)
         {
-            PoolingPro.GetInstance().ReturnToPool(tagWeapon, gameObject);
+            PoolingPro.GetInstance().ReturnToPool(tagWeapon.ToString(), gameObject);
         }
 
         transform.Rotate(0,rotateSpeed,0); 

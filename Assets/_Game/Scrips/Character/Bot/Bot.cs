@@ -46,7 +46,15 @@ public class Bot : Character
     public void FollowTarget() //neu vi tri diem den hon 1f voi target thi cap nhat cho vi tri diem den 
     {
         ChangeAnim(Constan.ANIM_RUN);
+
+        if (targetFollow == null)
+        {
+            SetRandomTargetFollow();
+            return;
+        }
+
         Bot bot;
+
         if (targetFollow.TryGetComponent<Bot>(out bot))
         {
             if (bot.CurrentState is DieState)
@@ -80,10 +88,14 @@ public class Bot : Character
             }
 
         }
-      
-        targetFollow = targets[Random.Range(0, targets.Count)];
-        destination = targetFollow.position;
-        agent.destination = destination;
+
+        if (targets.Count > 0)
+        {
+            targetFollow = targets[Random.Range(0, targets.Count)];
+            destination = targetFollow.position;
+            agent.destination = destination;
+        }
+        
     }
 
     public bool IsHaveTargetInRange()
@@ -118,6 +130,7 @@ public class Bot : Character
         skin.SetActive(false);
         if (!GameManager.GetInstance().IsSpawnEnemy())
         {
+            PoolingPro.GetInstance().ReturnToPool(CharacterType.Bot.ToString(), this.gameObject);
             return;
         }
         GameManager.GetInstance().NumSpawn -= 1;
@@ -148,7 +161,9 @@ public class Bot : Character
         {
             currentState.OnExit(this);
         }
+
         currentState = newState;
+
         if (currentState != null)
         {
             currentState.OnEnter(this);

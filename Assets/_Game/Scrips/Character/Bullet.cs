@@ -3,15 +3,22 @@ using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 
+public enum WeaponType
+{
+    Axe, Bullet, Knife, Boomerang, Arrow ,Candy, Uzi
+}
+
 public class Bullet : MonoBehaviour
 {
     protected float rotateSpeed = 10f;
 
     protected Rigidbody rb;
     protected float timer = 0;
-    protected float timeExist = 3f;
+    protected float timeExist = 1.5f;
     Character character;
-    public string tagWeapon;
+    Character owner;
+   
+    public WeaponType tagWeapon;
 
     public float Timer { get => timer; set => timer = value; }
 
@@ -25,7 +32,7 @@ public class Bullet : MonoBehaviour
         if (timer > timeExist)
         {
             //Pooling.GetInstance().ReturnGameObject(this.gameObject);
-            PoolingPro.GetInstance().ReturnToPool(tagWeapon, gameObject);
+            PoolingPro.GetInstance().ReturnToPool(tagWeapon.ToString(), gameObject);
         }
         
     }
@@ -44,15 +51,23 @@ public class Bullet : MonoBehaviour
             //{
             //    other.GetComponent<Bot>().ChangeState(new DieState());
             //}
-            PoolingPro.GetInstance().ReturnToPool(tagWeapon, gameObject);
-            //other.GetComponent<Player>().OnDeath();
+            PoolingPro.GetInstance().ReturnToPool(tagWeapon.ToString(), gameObject);
+            other.GetComponent<Player>().OnDeath();
+            owner.UpPoint(1);
+           
         }
 
         if (other.tag == "Bot")
         {
-            PoolingPro.GetInstance().ReturnToPool(tagWeapon, gameObject);
+            PoolingPro.GetInstance().ReturnToPool(tagWeapon.ToString(), gameObject);
             other.GetComponent<Bot>().ChangeState(new DieState());
+            owner.UpPoint(1);
         }
+    }
+
+    public void SetOwner(Character character)
+    {
+        owner = character;
     }
 
 }

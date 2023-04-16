@@ -286,7 +286,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 2031860895177601055, guid: 1b1251c7cd1c8b34ea30386c4e5ce4ac, type: 3}
   throwPoint: {fileID: 150299905252888459}
   l_AttackTarget: []
-  tagWeapon: Bullet
+  currentWeapon: 6
   anim: {fileID: 3018907055225023586}
   spawnPosTrans: {fileID: 150299905545302748}
   skin: {fileID: 8157168883553923851}

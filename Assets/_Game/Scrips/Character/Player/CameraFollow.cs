@@ -7,6 +7,8 @@ public class CameraFollow : MonoBehaviour
     [SerializeField] Transform player;
     [SerializeField] Vector3 offset = new Vector3(0, 15, -25);
 
+    public Vector3 Offset { get => offset; set => offset = value;}  
+
     // Update is called once per frame
     void Update()
     {
