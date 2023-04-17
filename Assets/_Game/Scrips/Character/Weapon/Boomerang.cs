@@ -8,11 +8,11 @@ public class Boomerang : Bullet
     [SerializeField] float speedBack;
     void Start()
     {
-        rb = GetComponent<Rigidbody>(); 
+        
     }
 
     // Update is called once per frame
-    void Update()
+    protected override void Update()
     {
         timer += Time.deltaTime;
         if (timer > timeExist)

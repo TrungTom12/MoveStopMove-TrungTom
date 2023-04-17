@@ -6,6 +6,7 @@ using UnityEngine;
 public class GameManager : Singleton<GameManager>
 {
     [SerializeField] private int Alive;
+    public FixedJoystick joystick;
     public int numBot = 10;
     public CameraFollow cameraFollow;
     [SerializeField] private List <Transform> l_character = new List<Transform> ();
@@ -24,8 +25,6 @@ public class GameManager : Singleton<GameManager>
     private void Start()
     {
         GetInstance();
-        UIManager.GetInstance().SetAliveText(Alive);
-        numSpawn = Alive - numBot;
     }
     
     public void OnInit(Level level)
@@ -33,10 +32,11 @@ public class GameManager : Singleton<GameManager>
         L_character.Clear();
         Alive = level.Alive;
         numBot = level.NumBot;
+        numSpawn = Alive - numBot;
         L_SpawnBot = level.L_SpawnPos;
         L_character = SpawnManager.GetInstance().SpawnBot(numBot);
         UIManager.GetInstance().SetAliveText(Alive);
-        numSpawn = Alive - numBot;
+        
     }
 
     public bool IsSpawnEnemy()
@@ -50,8 +50,7 @@ public class GameManager : Singleton<GameManager>
         UIManager.GetInstance().SetAliveText(Alive);
         if(Alive == 0)
         {
-            PoolingPro.GetInstance().ReturnToPool(CharacterType.Player.ToString(), currentPlayer.gameObject);
-            LevelManager.GetInstance().NextLevel();
+            Win();
         }
     } 
 
@@ -76,4 +75,34 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
+    public void Win()
+    {
+        PoolingPro.GetInstance().ClearObjectActive(CharacterType.Bot.ToString());
+        PoolingPro.GetInstance().ClearObjectActive(CharacterType.Player.ToString());
+        UIManager.GetInstance().DisplayWinPanel();
+        //SaveLoadManager.GetInstance().Data1.Coin += point;
+        //SaveLoadManager.GetInstance().Data1.WeaponCurrent = currentWeapon.ToString();
+        SaveLoadManager.GetInstance().Save();
+        Debug.Log("Now Coin: " + SaveLoadManager.GetInstance().Data1.Coin);
+        Debug.Log("Now Weapon: " + SaveLoadManager.GetInstance().Data1.WeaponCurrent);
+    }
+
+    public void Lose()
+    {
+        PoolingPro.GetInstance().ClearObjectActive(CharacterType.Bot.ToString());
+        PoolingPro.GetInstance().ClearObjectActive(CharacterType.Player.ToString());
+        UIManager.GetInstance().DisplayLosePanel();
+        SaveLoadManager.GetInstance().Save();
+        Debug.Log("Now Coin: " + SaveLoadManager.GetInstance().Data1.Coin);
+        Debug.Log("Now Weapon: " + SaveLoadManager.GetInstance().Data1.WeaponCurrent);
+    }
+    public void ClearObjectSpawn()
+    {
+        PoolingPro.GetInstance().ClearObjectActive(CharacterType.Bot.ToString());
+        PoolingPro.GetInstance().ClearObjectActive(CharacterType.Player.ToString());
+        PoolingPro.GetInstance().ClearObjectActive(WeaponType.Knife.ToString());
+        PoolingPro.GetInstance().ClearObjectActive(WeaponType.Boomerang.ToString());
+        PoolingPro.GetInstance().ClearObjectActive(WeaponType.Candy.ToString());
+        PoolingPro.GetInstance().ClearObjectActive(WeaponType.Axe.ToString());
+    }
 }

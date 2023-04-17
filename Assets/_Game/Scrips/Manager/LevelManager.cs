@@ -10,16 +10,15 @@ public class LevelManager : Singleton<LevelManager>
 
     public Level CurrentLevel { get => currentLevel; set => currentLevel = value; }
 
-    private void Start()
-    {
-
-    }
+    
     void Goto(int level)
     {
         SpawnManager.GetInstance().SpawnBot(10);
     }
     public void LoadLevel()
     {
+        GameManager.GetInstance().cameraFollow.ResetOffset();
+        GameManager.GetInstance().ClearObjectSpawn();
         currentLevel = Instantiate(allLevelPrefabs[levelId]).GetComponent<Level>();
         GameManager.GetInstance().OnInit(currentLevel);
     }
@@ -29,4 +28,13 @@ public class LevelManager : Singleton<LevelManager>
         levelId++;
         LoadLevel();
     }
+
+    public void Replay()
+    {
+        Destroy(currentLevel.gameObject);
+        LoadLevel();
+        //UIManager.GetInstance().HideLose();
+    }
+
+    
 }

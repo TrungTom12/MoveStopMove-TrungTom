@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class IDataSkin 
+public class IDataSkin
 {
     public int idSkin;
     public string name;

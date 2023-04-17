@@ -1,14 +1,13 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class SpawnPos : MonoBehaviour
 {
-    bool isHaveCharacter = false;
     public List<Character> l_charac = new List<Character>();
     public bool ISHAVEPLAYER = false;
    
-    private void Update()
+    private void Update() //tạo ktr các phan tu theo dk và đung thì thêm vào list 
     {
         List<Character> list = new List<Character>();
         foreach (Character c in l_charac)
@@ -29,7 +28,7 @@ public class SpawnPos : MonoBehaviour
             }
         }
 
-        foreach (Character c in list)
+        foreach (Character c in list) //ktr có các phần tư roi xoa 
         {
             l_charac.Remove(c);
         }
@@ -50,7 +49,7 @@ public class SpawnPos : MonoBehaviour
     {
         if (other.tag == "Player" || other.tag == "Bot")
         {
-            isHaveCharacter = false;
+            
             if (l_charac.Contains(other.GetComponent<Character>()))
                 l_charac.Remove(other.GetComponent<Character>());
         }

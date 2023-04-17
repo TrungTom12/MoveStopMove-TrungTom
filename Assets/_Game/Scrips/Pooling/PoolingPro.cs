@@ -3,6 +3,17 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
+public enum WeaponHold
+{
+    AxeHold,
+    //Stick,
+    KnifeHold,
+    BoomerangHold,
+    //ArrowHold,
+    CandyHold,
+    //UziHold
+};
+
 public class PoolingPro : Singleton<PoolingPro>
 {
     [System.Serializable]
@@ -14,6 +25,10 @@ public class PoolingPro : Singleton<PoolingPro>
         public string tag;
     }
 
+    public List<WeaponType> weapons;
+    public Dictionary<WeaponType, WeaponHold> weaponHolds = new Dictionary<WeaponType, WeaponHold>();
+
+
     public List<Pool> poolList = new List<Pool>();
     Bullet bullet;
     Dictionary<string, List<GameObject>> objectPools = new Dictionary<string, List<GameObject>>(); //GameObject
@@ -22,6 +37,16 @@ public class PoolingPro : Singleton<PoolingPro>
     void Start()
     {
         GetInstance();
+        weapons.Add(WeaponType.Axe);
+        weapons.Add(WeaponType.Candy);
+        weapons.Add(WeaponType.Knife);
+        weapons.Add(WeaponType.Boomerang);
+
+        weaponHolds[WeaponType.Axe] = WeaponHold.AxeHold;
+        weaponHolds[WeaponType.Knife] = WeaponHold.KnifeHold;
+        weaponHolds[WeaponType.Boomerang] = WeaponHold.BoomerangHold;
+        weaponHolds[WeaponType.Candy] = WeaponHold.CandyHold;
+
         foreach (Pool pool in poolList)
         {
             List<GameObject> l = new List<GameObject>();
@@ -36,8 +61,7 @@ public class PoolingPro : Singleton<PoolingPro>
             activeObjectPools[pool.tag] = new List<GameObject>();
 
         }
-        LevelManager.GetInstance().LoadLevel();
-        //GameManager.GetInstance().L_character = SpawnManager.GetInstance().SpawnBot(GameManager.GetInstance().numBot);
+        
     }
 
     public GameObject GetFromPool(string tag)
@@ -138,75 +162,53 @@ public class PoolingPro : Singleton<PoolingPro>
 
         switch (tag)
         {
+
             case "Bot":
-                go.transform.rotation = tempPool.poolObjectPrefab.transform.rotation;
-                activeObjectPools[tag].Remove(go);
-                objectPools[tag].Add(go);
-                go.SetActive(false);
+
+                go.GetComponent<Bot>().OnInit();
+                BasicReset(tag, go, tempPool);
                 break;
 
             case "Player":
-                go.transform.rotation = tempPool.poolObjectPrefab.transform.rotation;
-                activeObjectPools[tag].Remove(go);
-                objectPools[tag].Add(go);
-                go.SetActive(false);
+                BasicReset(tag, go, tempPool);
+                go.GetComponent<Player>().OnInit();
                 break;
 
-            case "Bullet":
-                go.transform.rotation = tempPool.poolObjectPrefab.transform.rotation;
-                go.GetComponent<Bullet>().ResetForce();
-                go.GetComponent<Bullet>().Timer = 0;
-                activeObjectPools[tag].Remove(go);
-                objectPools[tag].Add(go);
-                go.SetActive(false);
-                break;
-
+            case "Stick":
             case "Candy":
-                go.transform.rotation = tempPool.poolObjectPrefab.transform.rotation;
-                go.GetComponent<Bullet>().ResetForce();
-                go.GetComponent<Bullet>().Timer = 0;
-                activeObjectPools[tag].Remove(go);
-                objectPools[tag].Add(go);
-                go.SetActive(false);
-                break;
-
             case "Boomerang":
-                go.transform.rotation = tempPool.poolObjectPrefab.transform.rotation;
-                go.GetComponent<Bullet>().ResetForce();
-                go.GetComponent<Bullet>().Timer = 0;
-                activeObjectPools[tag].Remove(go);
-                objectPools[tag].Add(go);
-                go.SetActive(false);
-                break;
-
             case "Uzi":
-                go.transform.rotation = tempPool.poolObjectPrefab.transform.rotation;
-                go.GetComponent<Bullet>().ResetForce();
-                go.GetComponent<Bullet>().Timer = 0;
-                activeObjectPools[tag].Remove(go);
-                objectPools[tag].Add(go);
-                go.SetActive(false);
-                break;
-
             case "Knife":
-                go.transform.rotation = tempPool.poolObjectPrefab.transform.rotation;
-                go.GetComponent<Bullet>().ResetForce();
-                go.GetComponent<Bullet>().Timer = 0;
-                activeObjectPools[tag].Remove(go);
-                objectPools[tag].Add(go);
-                go.SetActive(false);
-                break;
-
             case "Axe":
-                go.transform.rotation = tempPool.poolObjectPrefab.transform.rotation;
-                go.GetComponent<Bullet>().ResetForce();
-                go.GetComponent<Bullet>().Timer = 0;
-                activeObjectPools[tag].Remove(go);
-                objectPools[tag].Add(go);
-                go.SetActive(false);
-                go.transform.localScale = Vector3.one;
+                WeaponReset(tag, go, tempPool);
                 break;
 
+            default:
+                BasicReset(tag, go, tempPool);
+                break;
+
+        }
+    }
+
+    public void BasicReset(string tag, GameObject go, Pool tempPool)
+    {
+        go.transform.rotation = tempPool.poolObjectPrefab.transform.rotation;
+        go.transform.localScale = tempPool.poolObjectPrefab.transform.localScale;
+        activeObjectPools[tag].Remove(go);
+        objectPools[tag].Add(go);
+        go.SetActive(false);
+    }
+    public void WeaponReset(string tag, GameObject go, Pool tempPool)
+    {
+        go.GetComponent<Bullet>().ResetForce();
+        go.GetComponent<Bullet>().Timer = 0;
+        BasicReset(tag, go, tempPool);
+    }
+    public void ClearObjectActive(string tag)
+    {
+        while (activeObjectPools[tag].Count > 0)
+        {
+            ReturnToPool(tag, activeObjectPools[tag][0]);
         }
     }
 }

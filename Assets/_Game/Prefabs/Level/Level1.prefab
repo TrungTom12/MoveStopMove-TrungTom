@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a123746338f4ce4d9a7c02a00c14242, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Alive: 20
+  Alive: 10
   NumBot: 10
   l_SpawnPos:
   - {fileID: 2510842786650809679}

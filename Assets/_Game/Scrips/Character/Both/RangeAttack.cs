@@ -14,7 +14,7 @@ public class RangeAttack : MonoBehaviour
         {
             if (characterOwner is Bot)
             {
-                (characterOwner as Bot).targetFollow = character.transform;
+                characterOwner.GetComponent<Bot>().targetFollow = character.transform;
             }
             characterOwner.L_AttackTarget.Add(character);
         }

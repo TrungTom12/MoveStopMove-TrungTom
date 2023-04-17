@@ -17,7 +17,9 @@ public class ButtonShop : MonoBehaviour
     public void OnClick()
     {
         Debug.Log("Click");
+        
     }
+
     public void SetUpData(IDataSkin _idata)
     {
         imageIcon.sprite = _idata.spriteIcon;

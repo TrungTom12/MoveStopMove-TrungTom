@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public enum CharacterType
@@ -36,15 +37,50 @@ public class Character : MonoBehaviour
     protected int point = 0;
     //Weapon
     [SerializeField] protected WeaponType currentWeapon;
+
+
+    [SerializeField] private float rangeDetect;
+    private float intialRadiusSightZone;
+    [SerializeField] SphereCollider sightZone;
+
+    [SerializeField] protected Transform weaponPos;
+    [SerializeField] protected GameObject weaponHold;
+
+    //TF
+    private Transform tf;
+    public Transform TF
+    {
+        get
+        {
+            if (tf == null)
+            {
+                tf = transform;
+            }
+            return tf;
+        }
+    }
+
+    public bool IsDead = false;
+
     protected virtual void Start()
     {
         characterCollider = GetComponent<Collider>();
+        intialRadiusSightZone = sightZone.radius;
     }
 
     protected virtual void Update() { }
     
     public virtual void Run() { }
     
+    public virtual void OnInit()
+    {
+        point = 0;
+        ChangeEquipment(currentWeapon);
+        weaponHold.SetActive(true);
+        L_AttackTarget.Clear();
+        IsDead = false;
+    }
+
     public virtual void SetTargetDirect(Vector3 targetPos) //Setup huong toi doi tuong
     {
         transform.LookAt(targetPos);
@@ -54,6 +90,7 @@ public class Character : MonoBehaviour
     {
         StopAllCoroutines();
         ChangeAnim(Constan.ANIM_DEAD);
+        IsDead = true;
     }
 
     public virtual void Attack()
@@ -74,14 +111,21 @@ public class Character : MonoBehaviour
         //lay bullet tu pooling tai vi tri 
         //dinh huong quay
         //them luc cho bullet
-        //nang Scale 
+        //nang Scale
         yield return new WaitForSeconds(waitThrow);
-        GameObject bullet = PoolingPro.GetInstance().GetFromPool(currentWeapon.ToString(),throwPoint.position);
-        bullet.GetComponent<Bullet>().tagWeapon = currentWeapon;
+        weaponHold.SetActive(false);
+        SoundManager.GetInstance().PlayOneShot(SoundManager.GetInstance().attackSound);
+        
+        Bullet bullet = PoolingPro.GetInstance().GetFromPool(currentWeapon.ToString(),throwPoint.position).GetComponent<Bullet>();
+        bullet.tagWeapon = currentWeapon;
         bullet.transform.rotation = transform.rotation;
-        bullet.GetComponent<Rigidbody>().AddForce(direct.x * _forceThrow, 0, direct.z * _forceThrow);
-        bullet.GetComponent<Bullet>().SetOwner(this);
+        bullet/*.GetComponent<Rigidbody>()*/.AddForce(direct.x * _forceThrow, 0, direct.z * _forceThrow);
+        bullet/*.GetComponent<Bullet>()*/.SetOwner(this);
         bullet.transform.localScale *= (1 + 0.01f * point);
+        yield return new WaitForSeconds(attackTime * 0.5f);
+        weaponHold.SetActive(true);
+
+        
     }
 
     //Anim
@@ -101,6 +145,21 @@ public class Character : MonoBehaviour
 
     }
 
+    public void ChangeEquipment(WeaponType weapon)
+    {
+        SetWeapon(weapon);
+    }
+    
+    public void SetWeapon(WeaponType weapon)
+    {
+        PoolingPro.GetInstance().ReturnToPool(PoolingPro.GetInstance().weaponHolds[currentWeapon].ToString(), weaponHold);
+        this.currentWeapon = weapon;
+        this.weaponHold = PoolingPro.GetInstance().GetFromPool(PoolingPro.GetInstance().weaponHolds[weapon].ToString(), weaponPos.position);
+        //TODO: cache transform
+        this.weaponHold.transform.SetParent(weaponPos);
+        sightZone.transform.localScale = new Vector3(1f, 1f, 1f) * StaticData.RangeWeapon[weapon];
+    }
+
     public void UpPoint(int point)
     {
         this.point += point;
@@ -108,30 +167,7 @@ public class Character : MonoBehaviour
         {
             GameManager.GetInstance().cameraFollow.Offset += new Vector3(0, 1 - 1);
         }
-        this.transform.localScale = Vector3.one * this.point * 0.1f + Vector3.one;
+        TF.localScale = Vector3.one * this.point * 0.1f + Vector3.one;
     }
 
-    public void ChangeEquipment()
-    {
-
-    }
-
-
-
-
-
-    ////TF
-    //private Transform tf;
-    //public Transform TF
-    //{
-    //    get
-    //    {
-    //        if (tf == null)
-    //        {
-    //            tf = transform;
-    //        }
-    //        return tf;
-    //    }
-    //}
-    
 }

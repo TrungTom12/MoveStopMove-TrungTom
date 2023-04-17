@@ -12,32 +12,46 @@ public class Player : Character
     private Vector3 moveVector;
     [SerializeField] private FixedJoystick _joystick;
     PlayerState _state;
+    float timerDead = 0f;
 
     internal PlayerState MyState { get => _state; set => _state = value; }
   
     protected override void Start()
     {
         base.Start();
-        _joystick = FindAnyObjectByType<FixedJoystick>();
-        GameManager.GetInstance().cameraFollow.SetTargetFollow(transform);
         OnInit();
     }
 
     void OnInit()
     {
+        base.OnInit();
+        _joystick = GameManager.GetInstance().joystick;
+        GameManager.GetInstance().cameraFollow.SetTargetFollow(transform);
+        timerDead = 0;
         _state = PlayerState.Idle;
         ChangeAnim(Constan.ANIM_IDLE);
     }
 
     protected override void Update()
     {
-        if (_state is PlayerState.Attacked || _state is PlayerState.Dead)
+        if (_state is PlayerState.Dead)
+        {
+            timerDead += Time.deltaTime;
+            if (timerDead > 2f)
+            {
+                PoolingPro.GetInstance().ReturnToPool(CharacterType.Player.ToString(), this.gameObject);
+                GameManager.GetInstance().Lose();
+            }
+            return;
+        }
+        if (_state is PlayerState.Attacked)
         {
             return;
         }
 
         Run();
-        if (targetAttack != null && targetAttack.GetComponent<Bot>().CurrentState is DieState)
+        //neu muc tieu da xác dinh va chet thi loai bo va chon random tu danh sach neu con 
+        if (targetAttack != null && targetAttack.GetComponent<Character>().IsDead)
         {
             L_AttackTarget.Remove(targetAttack);
             if (l_AttackTarget.Count > 0)
@@ -50,15 +64,13 @@ public class Player : Character
                 targetAttack = l_AttackTarget[Random.Range(0, l_AttackTarget.Count)];
         }
 
+        // xac dinh xem khi nào co the tan cong muc tiêu 
         if (l_AttackTarget.Contains(targetAttack) && timer >= delayAttack)
         {
             Attack();
             timer = 0;
         }
-        //if (Input.GetKeyDown(KeyCode.J))
-        //{
-        //    Attack();
-        //}
+       
     }
 
     public override void Run()
@@ -101,13 +113,9 @@ public class Player : Character
         {
             return;
         }
-        base.OnDeath();
+        
         _state = PlayerState.Dead;
-        SaveLoadManager.GetInstance().Data1.Coin += point;
-        SaveLoadManager.GetInstance().Data1.WeaponCurrent = currentWeapon.ToString();
-        SaveLoadManager.GetInstance().Save();
-        Debug.Log("Now Coin: " + SaveLoadManager.GetInstance().Data1.Coin);
-        Debug.Log("Now Weapon: " + SaveLoadManager.GetInstance().Data1.WeaponCurrent);
+        base.OnDeath();
     }
 
     //Attack

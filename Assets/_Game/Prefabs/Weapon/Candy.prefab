@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6705122988768793638}
   - component: {fileID: 6705122988768793639}
   - component: {fileID: 6705122988768793637}
-  - component: {fileID: 7298118683358094040}
+  - component: {fileID: 1217078532329889864}
   m_Layer: 0
   m_Name: Candy
   m_TagString: Untagged
@@ -116,7 +116,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &7298118683358094040
+--- !u!114 &1217078532329889864
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -125,10 +125,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 6705122988768793658}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f1181800ebbd92479f602ced77aeba1, type: 3}
+  m_Script: {fileID: 11500000, guid: 21be769e35f230848aae0f7925fdf187, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tagWeapon: 
+  rotateSpeed: 10
+  tagWeapon: 0
+  range: 0
 --- !u!1 &6705122989360177119
 GameObject:
   m_ObjectHideFlags: 0

@@ -470,7 +470,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a123746338f4ce4d9a7c02a00c14242, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Alive: 100
+  Alive: 12
   NumBot: 10
   l_SpawnPos:
   - {fileID: 8805254903229838609}

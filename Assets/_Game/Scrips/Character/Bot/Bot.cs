@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using Unity.VisualScripting;
@@ -25,23 +25,29 @@ public class Bot : Character
         base.Start();
         agent = GetComponent<NavMeshAgent>();
         destination = agent.destination;
-        spawnPos = spawnPosTrans.position;
         OnInit();
     }
 
     protected override void Update()
     {
         if (targetAttack != null && targetAttack.GetComponent<Character>() is Bot)
-        if (targetAttack.GetComponent<Bot>().CurrentState is DieState)
-        {
-            l_AttackTarget.Remove(targetAttack);
-        }
+            if (targetAttack.GetComponent<Bot>().IsDead)
+            {
+                l_AttackTarget.Remove(targetAttack);
+            }
+
+        if (targetAttack != null && targetAttack.GetComponent<Character>() is Player)
+            if (targetAttack.GetComponent<Player>().MyState is PlayerState.Dead)
+            {
+                l_AttackTarget.Remove(targetAttack);
+            }
 
         if (currentState != null)
         {
             currentState.OnExecute(this);
         }
     }
+
 
     public void FollowTarget() //neu vi tri diem den hon 1f voi target thi cap nhat cho vi tri diem den 
     {
@@ -55,7 +61,7 @@ public class Bot : Character
 
         Bot bot;
 
-        if (targetFollow.TryGetComponent<Bot>(out bot))
+        if (targetFollow.TryGetComponent<Bot>(out bot)) // Ktra neu bot chet thi tim doi tuong khac
         {
             if (bot.CurrentState is DieState)
             {
@@ -69,24 +75,17 @@ public class Bot : Character
         }
     }
 
-    public void SetRandomTargetFollow()
+    public void SetRandomTargetFollow() // ktra cac doi tuong trong list không chet thì them vao va chon ngau nhien de di chuyen toi 
     {
         ChangeAnim(Constan.ANIM_RUN);
         List<Transform> targets = new List<Transform>();
-        Bot bot;
 
-        foreach (Transform t in l_targetFollow)
+        for (int i = 0; i < l_targetFollow.Count; i++)
         {
-            if (t.gameObject.TryGetComponent<Bot>(out bot))
+            if (!l_targetFollow[i].GetComponent<Character>().IsDead)
             {
-                if (bot.CurrentState is not DieState)
-                    targets.Add(t);
+                targets.Add(l_targetFollow[i]);
             }
-            else
-            {
-                targets.Add(t);
-            }
-
         }
 
         if (targets.Count > 0)
@@ -95,7 +94,7 @@ public class Bot : Character
             destination = targetFollow.position;
             agent.destination = destination;
         }
-        
+
     }
 
     public bool IsHaveTargetInRange()
@@ -110,15 +109,16 @@ public class Bot : Character
         //Debug.Log("da co Enermy trong Range");
     }
 
-    public void OnInit()
+    public override void OnInit()
     {
+        base.OnInit();
         foreach (Transform t in GameManager.GetInstance().L_character)
         {
             if (!t.Equals(transform) && !l_targetFollow.Contains(t))
                 l_targetFollow.Add(t);
         }
+        weaponHold.SetActive(true);
         skin.SetActive(true);
-        //Debug.Log(l_targetFollow.Count);
         CharacterCollider.enabled = true;
         ChangeState(new IdleState());
     }
@@ -136,7 +136,7 @@ public class Bot : Character
         GameManager.GetInstance().NumSpawn -= 1;
         OnInit();
         //transform.position = GameController.GetInstance().GetRandomSpawnPos();
-        transform.position = GameManager.GetInstance().GetRandomSpawnPos();
+        TF.position = GameManager.GetInstance().GetRandomSpawnPos();
     }
 
     public override void OnDeath()
@@ -149,25 +149,27 @@ public class Bot : Character
     public void StopMoving()
     {
         ChangeAnim(Constan.ANIM_IDLE);
-        destination = transform.position;
+        destination = TF.position;
         agent.destination = destination;
     }
 
 
     public void ChangeState(IState newState)
     {
-
-        if (currentState != null)
-        {
-            currentState.OnExit(this);
-        }
-
+        currentState?.OnExit(this);
         currentState = newState;
+        currentState?.OnEnter(this);
+        //if (currentState != null)
+        //{
+        //    currentState.OnExit(this);
+        //}
 
-        if (currentState != null)
-        {
-            currentState.OnEnter(this);
-        }
+        //currentState = newState;
+
+        //if (currentState != null)
+        //{
+        //    currentState.OnEnter(this);
+        //}
     }
 
 

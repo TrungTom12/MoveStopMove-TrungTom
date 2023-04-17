@@ -10,6 +10,7 @@ public class SpawnManager : Singleton<SpawnManager>
         List<Transform> transforms = new List<Transform>();
         Player player = PoolingPro.GetInstance().GetFromPool(CharacterType.Player.ToString(), LevelManager.GetInstance().CurrentLevel.L_SpawnPos[numBot].position).GetComponent<Player>();
         transforms.Add(player.transform);
+        player.OnInit();
         GameManager.GetInstance().CurrentPlayer = player;
         for (int i = 0; i < numBot; i++)
         {

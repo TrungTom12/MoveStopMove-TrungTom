@@ -5,7 +5,7 @@ using UnityEngine;
 public class DieState : IState
 {
     float timer = 0;
-    float timeDelay = 2f;
+    float timeDelay = 3f;
     public void OnEnter(Bot bot)
     {
         bot.CharacterCollider.enabled = false;

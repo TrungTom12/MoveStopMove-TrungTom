@@ -9,19 +9,7 @@ public class Constan
     public const string ANIM_RUN = "run";
     public const string ANIM_DANCE = "dance";
     public const string ANIM_DEAD = "dead";
-    public const string TAG_NAME_BOT = "Bot";
-    public const string TAG_NAME_PLAYER = "Player";
-
-
-
-    //public static PoolType ConvertWeaponTypeToObjectType(WeaponType weaponType)
-    //{
-    //    return weaponType switch
-    //    {
-    //        WeaponType.Axe => PoolType.Axe,
-    //        WeaponType.Boomerang => PoolType.Boomerang,
-    //        WeaponType.Cream => PoolType.Cream,
-    //        _ => PoolType.None,
-    //    };
-    //}
+    public const string TAG_BOT = "Bot";
+    public const string TAG_PLAYER = "Player";
+    public const string TAG_OBSTACLE = "Obstacle";
 }
