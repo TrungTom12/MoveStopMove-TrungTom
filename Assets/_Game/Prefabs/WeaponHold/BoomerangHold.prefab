@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &6867686488009752538
+--- !u!1 &4357845458237364570
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,7 +8,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7586683872361071121}
+  - component: {fileID: 1430251997500650461}
   m_Layer: 0
   m_Name: BoomerangHold
   m_TagString: Untagged
@@ -16,28 +16,28 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7586683872361071121
+--- !u!4 &1430251997500650461
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6867686488009752538}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_GameObject: {fileID: 4357845458237364570}
+  m_LocalRotation: {x: 0.000000014901156, y: 0.00000024586907, z: -0.000000027939667, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 8705285438368422457}
+  - {fileID: 7050547650203631267}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &8705285438368284857
+--- !u!1001 &7050547650203755555
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 7586683872361071121}
+    m_TransformParent: {fileID: 1430251997500650461}
     m_Modifications:
     - target: {fileID: 100000, guid: cb6e597070ed41f4eb5cb9583c725959, type: 3}
       propertyPath: m_Name
@@ -61,31 +61,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: cb6e597070ed41f4eb5cb9583c725959, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.3
+      value: -0.313
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: cb6e597070ed41f4eb5cb9583c725959, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.2
+      value: -0.262
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: cb6e597070ed41f4eb5cb9583c725959, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: cb6e597070ed41f4eb5cb9583c725959, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: cb6e597070ed41f4eb5cb9583c725959, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: cb6e597070ed41f4eb5cb9583c725959, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: cb6e597070ed41f4eb5cb9583c725959, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: cb6e597070ed41f4eb5cb9583c725959, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -97,12 +97,20 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: cb6e597070ed41f4eb5cb9583c725959, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
+      value: 90
       objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: cb6e597070ed41f4eb5cb9583c725959, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2300000, guid: cb6e597070ed41f4eb5cb9583c725959, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 9cd116b1cf9e5574d84a08cb46b29008, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cb6e597070ed41f4eb5cb9583c725959, type: 3}
---- !u!4 &8705285438368422457 stripped
+--- !u!4 &7050547650203631267 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: cb6e597070ed41f4eb5cb9583c725959, type: 3}
-  m_PrefabInstance: {fileID: 8705285438368284857}
+  m_PrefabInstance: {fileID: 7050547650203755555}
   m_PrefabAsset: {fileID: 0}

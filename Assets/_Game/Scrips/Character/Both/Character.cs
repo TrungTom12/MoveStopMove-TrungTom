@@ -48,6 +48,9 @@ public class Character : MonoBehaviour
 
     //TF
     private Transform tf;
+    private Transform weaponHoldTransform;
+    private Transform sightZoneTransform;
+
     public Transform TF
     {
         get
@@ -60,6 +63,29 @@ public class Character : MonoBehaviour
         }
     }
 
+    public Transform WeaponHoldTransform
+    {
+        get
+        {
+            if (weaponHoldTransform == null)
+            {
+                weaponHoldTransform = weaponHold.transform;
+            }
+            return weaponHoldTransform;
+        }
+    }
+    public Transform SightZoneTransform
+    {
+        get
+        {
+            if (sightZoneTransform == null)
+            {
+                sightZoneTransform = sightZone.transform;
+            }
+            return sightZoneTransform;
+        }
+    }
+
     public bool IsDead = false;
 
     protected virtual void Start()
@@ -68,7 +94,7 @@ public class Character : MonoBehaviour
         intialRadiusSightZone = sightZone.radius;
     }
 
-    protected virtual void Update() { }
+    virtual protected  void Update() { }
     
     public virtual void Run() { }
     
@@ -118,10 +144,10 @@ public class Character : MonoBehaviour
         
         Bullet bullet = PoolingPro.GetInstance().GetFromPool(currentWeapon.ToString(),throwPoint.position).GetComponent<Bullet>();
         bullet.tagWeapon = currentWeapon;
-        bullet.transform.rotation = transform.rotation;
+        bullet.TF.rotation = transform.rotation;
         bullet/*.GetComponent<Rigidbody>()*/.AddForce(direct.x * _forceThrow, 0, direct.z * _forceThrow);
         bullet/*.GetComponent<Bullet>()*/.SetOwner(this);
-        bullet.transform.localScale *= (1 + 0.01f * point);
+        bullet.TF.localScale *= (1 + 0.1f * point);
         yield return new WaitForSeconds(attackTime * 0.5f);
         weaponHold.SetActive(true);
 
@@ -157,7 +183,7 @@ public class Character : MonoBehaviour
         this.weaponHold = PoolingPro.GetInstance().GetFromPool(PoolingPro.GetInstance().weaponHolds[weapon].ToString(), weaponPos.position);
         //TODO: cache transform
         this.weaponHold.transform.SetParent(weaponPos);
-        sightZone.transform.localScale = new Vector3(1f, 1f, 1f) * StaticData.RangeWeapon[weapon];
+        SightZoneTransform.localScale = new Vector3(1f, 1f, 1f) * StaticData.RangeWeapon[weapon];
     }
 
     public void UpPoint(int point)

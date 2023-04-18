@@ -7,6 +7,7 @@ using UnityEngine.AI;
 
 public class Bot : Character
 {
+    //Setup
     [SerializeField] Transform spawnPosTrans;
     [SerializeField] GameObject skin;
     private NavMeshAgent agent;
@@ -30,18 +31,14 @@ public class Bot : Character
 
     protected override void Update()
     {
-        if (targetAttack != null && targetAttack.GetComponent<Character>() is Bot)
-            if (targetAttack.GetComponent<Bot>().IsDead)
+        if (targetAttack != null)
+        {
+            Character charTarget = targetAttack.GetComponent<Character>();
+            if (charTarget.IsDead)
             {
                 l_AttackTarget.Remove(targetAttack);
             }
-
-        if (targetAttack != null && targetAttack.GetComponent<Character>() is Player)
-            if (targetAttack.GetComponent<Player>().MyState is PlayerState.Dead)
-            {
-                l_AttackTarget.Remove(targetAttack);
-            }
-
+        }
         if (currentState != null)
         {
             currentState.OnExecute(this);
@@ -52,21 +49,14 @@ public class Bot : Character
     public void FollowTarget() //neu vi tri diem den hon 1f voi target thi cap nhat cho vi tri diem den 
     {
         ChangeAnim(Constan.ANIM_RUN);
-
         if (targetFollow == null)
         {
             SetRandomTargetFollow();
             return;
         }
-
-        Bot bot;
-
-        if (targetFollow.TryGetComponent<Bot>(out bot)) // Ktra neu bot chet thi tim doi tuong khac
+        if (targetFollow.GetComponent<Character>().IsDead)
         {
-            if (bot.CurrentState is DieState)
-            {
-                SetRandomTargetFollow();
-            }
+            SetRandomTargetFollow();
         }
         if (Vector3.Distance(destination, targetFollow.position) > 1.0f)
         {
@@ -135,7 +125,6 @@ public class Bot : Character
         }
         GameManager.GetInstance().NumSpawn -= 1;
         OnInit();
-        //transform.position = GameController.GetInstance().GetRandomSpawnPos();
         TF.position = GameManager.GetInstance().GetRandomSpawnPos();
     }
 

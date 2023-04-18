@@ -115,6 +115,7 @@ public class PoolingPro : Singleton<PoolingPro>
             go.transform.position = pos;
             go.SetActive(true);
             objectPools[tag].RemoveAt(0);
+            activeObjectPools[tag].Add(go);
             switch (tag)
             {
                 case "Boomerang":
@@ -131,6 +132,7 @@ public class PoolingPro : Singleton<PoolingPro>
             go.transform.position = pos;
             go.SetActive(true);
             objectPools[tag].Remove(go);
+            activeObjectPools[tag].Add(go);
             switch (tag)
             {
                 case "Boomerang":

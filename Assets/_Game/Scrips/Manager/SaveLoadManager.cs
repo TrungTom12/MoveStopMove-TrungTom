@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using Unity.VisualScripting;
+using UnityEditor.Search;
 using UnityEngine;
 
 public class SaveLoadManager : Singleton<SaveLoadManager>
@@ -21,7 +22,7 @@ public class SaveLoadManager : Singleton<SaveLoadManager>
         public int LevelID { get; set; }
     }
 
-    [SerializeField] private string saveFileName = "savegame.ss";
+    [SerializeField] private string saveFileName = Constan.SAVE_FILE_NAME;
     [SerializeField] private bool loadOnStart = true;
     private Data data;
     private BinaryFormatter formatter;
@@ -36,6 +37,7 @@ public class SaveLoadManager : Singleton<SaveLoadManager>
         {
             Load();
         }
+        UIManager.GetInstance().DisplayMainMenuPanel();
         Debug.Log(saveFileName);
     }
 

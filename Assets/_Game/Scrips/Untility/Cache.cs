@@ -4,13 +4,13 @@ using UnityEngine;
 
 public static class Cache
 {
-    private static Dictionary<Collider, CharacterController> characters = new Dictionary<Collider, CharacterController>();
+    private static Dictionary<Collider, Character> characters = new Dictionary<Collider, Character>();
 
-    public static CharacterController GetCharacter(Collider collider)
+    public static Character GetCharacter(Collider collider)
     {
         if (!characters.ContainsKey(collider))
         {
-            characters.Add(collider, collider.GetComponent<CharacterController>());
+            characters.Add(collider, collider.GetComponent<Character>());
         }
         return characters[collider];
     }

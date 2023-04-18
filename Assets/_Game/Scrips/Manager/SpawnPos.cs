@@ -12,23 +12,13 @@ public class SpawnPos : MonoBehaviour
         List<Character> list = new List<Character>();
         foreach (Character c in l_charac)
         {
-            if (c is Bot)
+            if (c.IsDead)
             {
-                if (c.GetComponent<Bot>().CurrentState is DieState)
-                {
-                    list.Add(c);
-                }
-            }
-            else
-            {
-                if (c.GetComponent<Player>().MyState is PlayerState.Dead)
-                {
-                    list.Add(c);
-                }
+                list.Add(c);
             }
         }
 
-        foreach (Character c in list) //ktr có các phần tư roi xoa 
+        foreach (Character c in list)
         {
             l_charac.Remove(c);
         }
@@ -38,20 +28,18 @@ public class SpawnPos : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player" || other.tag == "Bot")
+        if (other.CompareTag(Constan.TAG_PLAYER) || other.CompareTag(Constan.TAG_BOT))
         {
-            if (!l_charac.Contains(other.GetComponent<Character>()))
-                l_charac.Add(other.GetComponent<Character>());
+            if (!l_charac.Contains(Cache.GetCharacter(other)))
+                l_charac.Add(Cache.GetCharacter(other));
         }
     }
-
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag == "Player" || other.tag == "Bot")
+        if (other.CompareTag(Constan.TAG_PLAYER) || other.CompareTag(Constan.TAG_BOT))
         {
-            
-            if (l_charac.Contains(other.GetComponent<Character>()))
-                l_charac.Remove(other.GetComponent<Character>());
+            if (l_charac.Contains(Cache.GetCharacter(other)))
+                l_charac.Remove(Cache.GetCharacter(other));
         }
     }
 

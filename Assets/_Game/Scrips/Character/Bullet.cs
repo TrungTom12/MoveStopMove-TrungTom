@@ -71,7 +71,7 @@ public class Bullet : MonoBehaviour
         rbWeapon.velocity = Vector3.zero;
         rbWeapon.angularVelocity = Vector3.zero;
     }
-    private void OnTriggerEnter(Collider other)
+    protected void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag(Constan.TAG_OBSTACLE))
         {
@@ -87,7 +87,8 @@ public class Bullet : MonoBehaviour
             //    other.GetComponent<Bot>().ChangeState(new DieState());
             //}
             PoolingPro.GetInstance().ReturnToPool(tagWeapon.ToString(), gameObject);
-            other.GetComponent<Player>().OnDeath();
+            //other.GetComponent<Player>().OnDeath();
+            Cache.GetCharacter(other).OnDeath();
             owner.UpPoint(1);
             SoundManager.GetInstance().PlayOneShot(SoundManager.GetInstance().killSound);
 
@@ -99,6 +100,7 @@ public class Bullet : MonoBehaviour
             other.GetComponent<Bot>().ChangeState(new DieState());
             owner.UpPoint(1);
             SoundManager.GetInstance().PlayOneShot(SoundManager.GetInstance().killSound);
+            
             if (owner is Player)
             {
                 SaveLoadManager.GetInstance().Data1.Coin += 1;

@@ -22,10 +22,11 @@ public class Player : Character
         OnInit();
     }
 
-    void OnInit()
+    public override void OnInit()
     {
         base.OnInit();
         _joystick = GameManager.GetInstance().joystick;
+        _joystick.OnInit();
         GameManager.GetInstance().cameraFollow.SetTargetFollow(transform);
         timerDead = 0;
         _state = PlayerState.Idle;
@@ -34,6 +35,7 @@ public class Player : Character
 
     protected override void Update()
     {
+
         if (_state is PlayerState.Dead)
         {
             timerDead += Time.deltaTime;
@@ -93,7 +95,7 @@ public class Player : Character
 
         else if (_joystick.Horizontal == 0 && _joystick.Vertical == 0 )
         {
-            if (_state is PlayerState.Attacked || _state == PlayerState.Attacking)
+            if (_state == PlayerState.Attacked || _state == PlayerState.Attacking)
             {
 
             }

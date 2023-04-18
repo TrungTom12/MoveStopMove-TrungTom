@@ -6,17 +6,18 @@ using UnityEngine;
 public class GameManager : Singleton<GameManager>
 {
     [SerializeField] private int Alive;
+    public CameraFollow cameraFollow;
     public FixedJoystick joystick;
     public int numBot = 10;
-    public CameraFollow cameraFollow;
+
+    private int numSpawn;
+    public int NumSpawn { get => numSpawn; set => numSpawn = value; }
+
     [SerializeField] private List <Transform> l_character = new List<Transform> ();
     public List<Transform> L_character { get => l_character; set => l_character = value; }
 
     [SerializeField] private List<Transform> l_SpawnBot = new List<Transform>();
     public List<Transform> L_SpawnBot { get => l_SpawnBot; set => l_SpawnBot = value; }
-
-    private int numSpawn;
-    public int NumSpawn { get => numSpawn; set => numSpawn = value; }
 
     public Player currentPlayer;
     public Player CurrentPlayer { get => currentPlayer; set => currentPlayer = value; }
@@ -36,7 +37,7 @@ public class GameManager : Singleton<GameManager>
         L_SpawnBot = level.L_SpawnPos;
         L_character = SpawnManager.GetInstance().SpawnBot(numBot);
         UIManager.GetInstance().SetAliveText(Alive);
-        
+
     }
 
     public bool IsSpawnEnemy()
