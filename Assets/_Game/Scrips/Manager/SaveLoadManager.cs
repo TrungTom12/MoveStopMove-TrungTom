@@ -13,11 +13,27 @@ public class SaveLoadManager : Singleton<SaveLoadManager>
     public class Data
     {
 
-        int coin = 0;
+        public Data()
+        {
+            Coin = 0;
+            WeaponCurrent = "Axe";
+            IdPantMaterialCurrent = 1;
+            HeadCurrent = "Head1";
+            WeaponOwners = new List<WeaponType>();
+            PantOwners = new List<int>();
+            HeadOwners = new List<string>();
+            EquipOwners = new List<Equipment>();
+            LevelID = 1;
+        }
+        public int IdPantMaterialCurrent { get; set; }
         public string WeaponCurrent { get; set; }
 
-        public string WeaponOwner { get; set; }
-        public int Coin { get => coin; set => coin = value; }
+        public string HeadCurrent { get; set; }
+        public List<WeaponType> WeaponOwners { get; set; }
+        public List<int> PantOwners { get; set; }
+        public List<string> HeadOwners { get; set; }
+        public List<Equipment> EquipOwners;
+        public int Coin { get; set; }
 
         public int LevelID { get; set; }
     }
@@ -29,7 +45,7 @@ public class SaveLoadManager : Singleton<SaveLoadManager>
 
     public Data Data1 { get => data; set => data = value; }
 
-    private void Start()
+    public void OnInit()
     {
         formatter = new BinaryFormatter();
 
@@ -37,8 +53,12 @@ public class SaveLoadManager : Singleton<SaveLoadManager>
         {
             Load();
         }
-        UIManager.GetInstance().DisplayMainMenuPanel();
+        //UIManager.GetInstance().DisplayMainMenuPanel();
         Debug.Log(saveFileName);
+        foreach (string x in data.HeadOwners)
+        {
+            Debug.Log(x);
+        }
     }
 
     public void Load()
@@ -50,6 +70,34 @@ public class SaveLoadManager : Singleton<SaveLoadManager>
             try
             {
                 data = (Data)formatter.Deserialize(file);
+                if (data.Coin < 300)
+                {
+                    data.Coin = 999;
+                }
+                if (data.WeaponCurrent == "")
+                {
+                    data.WeaponCurrent = "Axe";
+                }
+                if (data.IdPantMaterialCurrent <= 0)
+                {
+                    data.IdPantMaterialCurrent = 0;
+                }
+                if (data.PantOwners == null)
+                {
+                    data.PantOwners = new List<int>();
+                }
+                if (data.HeadOwners == null)
+                {
+                    data.HeadOwners = new List<string>();
+                }
+                if (data.EquipOwners == null)
+                {
+                    data.EquipOwners = new List<Equipment>();
+                }
+                if (data.HeadCurrent == null)
+                {
+                    data.HeadCurrent = "Head1";
+                }
                 Debug.Log(data.Coin);
                 Debug.Log(data.WeaponCurrent);
             }

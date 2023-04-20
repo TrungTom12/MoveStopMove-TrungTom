@@ -5,14 +5,23 @@ using UnityEngine;
 
 public enum WeaponHold
 {
-    AxeHold,
-    //Stick,
-    KnifeHold,
-    BoomerangHold,
-    //ArrowHold,
-    CandyHold,
-    //UziHold
+    AxeHold, KnifeHold, BoomerangHold, CandyHold
 };
+
+public enum WeaponShow
+{
+    AxeShow, KnifeShow, BoomerangShow, CandyShow,
+}
+
+public enum Pant
+{
+    Pant1, Pant2
+}
+
+public enum Head
+{
+    Head1, Head2
+}
 
 public class PoolingPro : Singleton<PoolingPro>
 {
@@ -25,15 +34,20 @@ public class PoolingPro : Singleton<PoolingPro>
         public string tag;
     }
 
-    public List<WeaponType> weapons;
-    public Dictionary<WeaponType, WeaponHold> weaponHolds = new Dictionary<WeaponType, WeaponHold>();
-
-
-    public List<Pool> poolList = new List<Pool>();
+    
     Bullet bullet;
+    public List<Pool> poolList = new List<Pool>();
+    
     Dictionary<string, List<GameObject>> objectPools = new Dictionary<string, List<GameObject>>(); //GameObject
     Dictionary<string, List<GameObject>> activeObjectPools = new Dictionary<string, List<GameObject>>(); // GameObject dc kich hoạt 
 
+    public List<WeaponType> weapons;
+    public Dictionary<WeaponType, WeaponHold> weaponHolds = new Dictionary<WeaponType, WeaponHold>();
+    public Dictionary<WeaponType, WeaponShow> weaponShows = new Dictionary<WeaponType, WeaponShow>();
+
+    public List<Material> pantMaterials;
+    public Dictionary<Pant,Material> pantMaterial = new Dictionary<Pant, Material>();
+	
     void Start()
     {
         GetInstance();
@@ -46,6 +60,14 @@ public class PoolingPro : Singleton<PoolingPro>
         weaponHolds[WeaponType.Knife] = WeaponHold.KnifeHold;
         weaponHolds[WeaponType.Boomerang] = WeaponHold.BoomerangHold;
         weaponHolds[WeaponType.Candy] = WeaponHold.CandyHold;
+		
+		weaponShows[WeaponType.Axe] = WeaponShow.AxeShow;
+        weaponShows[WeaponType.Knife] = WeaponShow.KnifeShow;
+        weaponShows[WeaponType.Boomerang] = WeaponShow.BoomerangShow;
+        weaponShows[WeaponType.Candy] = WeaponShow.CandyShow;
+
+        pantMaterial[Pant.Pant1] = pantMaterials[0];
+        pantMaterial[Pant.Pant2] = pantMaterials[1];
 
         foreach (Pool pool in poolList)
         {
@@ -61,6 +83,7 @@ public class PoolingPro : Singleton<PoolingPro>
             activeObjectPools[pool.tag] = new List<GameObject>();
 
         }
+		NewUIManager.GetInstance().OpenUI<MainMenu>();
         
     }
 
@@ -164,9 +187,7 @@ public class PoolingPro : Singleton<PoolingPro>
 
         switch (tag)
         {
-
             case "Bot":
-
                 go.GetComponent<Bot>().OnInit();
                 BasicReset(tag, go, tempPool);
                 break;
@@ -183,6 +204,22 @@ public class PoolingPro : Singleton<PoolingPro>
             case "Knife":
             case "Axe":
                 WeaponReset(tag, go, tempPool);
+                break;
+
+            case "AxeShow":
+            case "BoomerangShow":
+            case "KnifeShow":
+            case "CandyShow":
+                activeObjectPools[tag].Remove(go);
+                objectPools[tag].Add(go);
+                go.SetActive(false);
+                break;
+
+            case "AxeHold":
+            case "BoomerangHold":
+            case "KnifeHold":
+            case "CandyHold":
+                BasicReset(tag, go, tempPool);
                 break;
 
             default:

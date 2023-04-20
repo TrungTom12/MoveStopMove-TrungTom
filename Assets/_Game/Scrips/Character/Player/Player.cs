@@ -25,12 +25,24 @@ public class Player : Character
     public override void OnInit()
     {
         base.OnInit();
-        _joystick = GameManager.GetInstance().joystick;
-        _joystick.OnInit();
+        _joystick = FindObjectOfType<FixedJoystick>();
+        if (_joystick != null)
+            _joystick.OnInit();
         GameManager.GetInstance().cameraFollow.SetTargetFollow(transform);
         timerDead = 0;
         _state = PlayerState.Idle;
         ChangeAnim(Constan.ANIM_IDLE);
+
+        ChangeEquipment(StaticData.WeaponEnum[SaveLoadManager.GetInstance().Data1.WeaponCurrent]);
+        int index = SaveLoadManager.GetInstance().Data1.IdPantMaterialCurrent;
+        if (index > 0)
+            SetPant(PoolingPro.GetInstance().pantMaterials[index - 1]);
+        else
+        {
+            SetPant(PoolingPro.GetInstance().pantMaterials[0]);
+        }
+
+        SetHead(StaticData.HeadEnum[SaveLoadManager.GetInstance().Data1.HeadCurrent]);
     }
 
     protected override void Update()
@@ -51,6 +63,16 @@ public class Player : Character
             return;
         }
 
+        if (targetAttack != null)
+        {
+            targetAttack.GetComponent<Bot>().EnableCircleTarget();
+        }
+        if (!L_AttackTarget.Contains(targetAttack) & targetAttack != null)
+        {
+            targetAttack.GetComponent<Bot>().UnEnableCircleTarget();
+        }
+
+
         Run();
         //neu muc tieu da xác dinh va chet thi loai bo va chon random tu danh sach neu con 
         if (targetAttack != null && targetAttack.GetComponent<Character>().IsDead)
@@ -63,7 +85,9 @@ public class Player : Character
         {
 
             if (!l_AttackTarget.Contains(targetAttack))
+			{
                 targetAttack = l_AttackTarget[Random.Range(0, l_AttackTarget.Count)];
+			}
         }
 
         // xac dinh xem khi nào co the tan cong muc tiêu 
@@ -77,6 +101,10 @@ public class Player : Character
 
     public override void Run()
     {
+		if (_joystick == null)
+        {
+            return;
+        }
         base.Run();
         moveVector = Vector3.zero;
         moveVector.x = _joystick.Horizontal * _moveSpeed * Time.deltaTime;
@@ -117,6 +145,9 @@ public class Player : Character
         }
         
         _state = PlayerState.Dead;
+        base.OnDeath();
+		
+		SoundManager2.GetInstance().PlaySound(Constan.LOSE_MUSIC_NAME);
         base.OnDeath();
     }
 

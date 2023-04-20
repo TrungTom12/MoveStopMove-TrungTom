@@ -22,6 +22,24 @@ public class GameManager : Singleton<GameManager>
     public Player currentPlayer;
     public Player CurrentPlayer { get => currentPlayer; set => currentPlayer = value; }
 
+    private void Awake()
+    {
+        //base.Awake();
+        SaveLoadManager.GetInstance().OnInit();
+
+        Input.multiTouchEnabled = false;
+        Application.targetFrameRate = 60;
+        Screen.sleepTimeout = SleepTimeout.NeverSleep;
+
+        int maxScreenHeight = 1280;
+        float ratio = (float)Screen.currentResolution.width / (float)Screen.currentResolution.height;
+        if (Screen.currentResolution.height > maxScreenHeight)
+        {
+            Screen.SetResolution(Mathf.RoundToInt(ratio * (float)maxScreenHeight), maxScreenHeight, true);
+        }
+
+
+    }
 
     private void Start()
     {
@@ -36,7 +54,8 @@ public class GameManager : Singleton<GameManager>
         numSpawn = Alive - numBot;
         L_SpawnBot = level.L_SpawnPos;
         L_character = SpawnManager.GetInstance().SpawnBot(numBot);
-        UIManager.GetInstance().SetAliveText(Alive);
+        //UIManager.GetInstance().SetAliveText(Alive);
+		NewUIManager.GetInstance().GetUI<PlayingMenu>().SetAliveText(Alive);
 
     }
 
@@ -48,8 +67,9 @@ public class GameManager : Singleton<GameManager>
     public void UpdateAliveText()
     {
         Alive -= 1;
-        UIManager.GetInstance().SetAliveText(Alive);
-        if(Alive == 0)
+        //UIManager.GetInstance().SetAliveText(Alive);
+        NewUIManager.GetInstance().GetUI<PlayingMenu>().SetAliveText(Alive);
+		if(Alive == 0)
         {
             Win();
         }
@@ -80,7 +100,9 @@ public class GameManager : Singleton<GameManager>
     {
         PoolingPro.GetInstance().ClearObjectActive(CharacterType.Bot.ToString());
         PoolingPro.GetInstance().ClearObjectActive(CharacterType.Player.ToString());
-        UIManager.GetInstance().DisplayWinPanel();
+        //UIManager.GetInstance().DisplayWinPanel();
+        NewUIManager.GetInstance().CloseAll();
+        NewUIManager.GetInstance().OpenUI<WinMenu>();
         //SaveLoadManager.GetInstance().Data1.Coin += point;
         //SaveLoadManager.GetInstance().Data1.WeaponCurrent = currentWeapon.ToString();
         SaveLoadManager.GetInstance().Save();
@@ -92,7 +114,9 @@ public class GameManager : Singleton<GameManager>
     {
         PoolingPro.GetInstance().ClearObjectActive(CharacterType.Bot.ToString());
         PoolingPro.GetInstance().ClearObjectActive(CharacterType.Player.ToString());
-        UIManager.GetInstance().DisplayLosePanel();
+        //UIManager.GetInstance().DisplayLosePanel();
+        NewUIManager.GetInstance().CloseAll();
+        NewUIManager.GetInstance().OpenUI<LoseMenu>();
         SaveLoadManager.GetInstance().Save();
         Debug.Log("Now Coin: " + SaveLoadManager.GetInstance().Data1.Coin);
         Debug.Log("Now Weapon: " + SaveLoadManager.GetInstance().Data1.WeaponCurrent);

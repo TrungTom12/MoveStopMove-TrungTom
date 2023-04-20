@@ -29,42 +29,6 @@ public class Bot : Character
         OnInit();
     }
 
-    protected override void Update()
-    {
-        if (targetAttack != null)
-        {
-            Character charTarget = targetAttack.GetComponent<Character>();
-            if (charTarget.IsDead)
-            {
-                l_AttackTarget.Remove(targetAttack);
-            }
-        }
-        if (currentState != null)
-        {
-            currentState.OnExecute(this);
-        }
-    }
-
-
-    public void FollowTarget() //neu vi tri diem den hon 1f voi target thi cap nhat cho vi tri diem den 
-    {
-        ChangeAnim(Constan.ANIM_RUN);
-        if (targetFollow == null)
-        {
-            SetRandomTargetFollow();
-            return;
-        }
-        if (targetFollow.GetComponent<Character>().IsDead)
-        {
-            SetRandomTargetFollow();
-        }
-        if (Vector3.Distance(destination, targetFollow.position) > 1.0f)
-        {
-            destination = targetFollow.position;
-            agent.destination = destination;
-        }
-    }
-
     public void SetRandomTargetFollow() // ktra cac doi tuong trong list không chet thì them vao va chon ngau nhien de di chuyen toi 
     {
         ChangeAnim(Constan.ANIM_RUN);
@@ -87,18 +51,6 @@ public class Bot : Character
 
     }
 
-    public bool IsHaveTargetInRange()
-    {
-        if (L_AttackTarget.Count > 0)
-        {
-            targetAttack = l_AttackTarget[Random.Range(0, l_AttackTarget.Count)];
-            return true;
-
-        }
-        return false;
-        //Debug.Log("da co Enermy trong Range");
-    }
-
     public override void OnInit()
     {
         base.OnInit();
@@ -112,6 +64,57 @@ public class Bot : Character
         CharacterCollider.enabled = true;
         ChangeState(new IdleState());
     }
+
+    public void FollowTarget() //neu vi tri diem den hon 1f voi target thi cap nhat cho vi tri diem den 
+    {
+        ChangeAnim(Constan.ANIM_RUN);
+        if (targetFollow == null)
+        {
+            SetRandomTargetFollow();
+            return;
+        }
+        if (targetFollow.GetComponent<Character>().IsDead)
+        {
+            SetRandomTargetFollow();
+        }
+        if (Vector3.Distance(destination, targetFollow.position) > 1.0f)
+        {
+            destination = targetFollow.position;
+            agent.destination = destination;
+        }
+    }
+
+    
+
+    protected override void Update()
+    {
+        if (targetAttack != null)
+        {
+            Character charTarget = targetAttack.GetComponent<Character>();
+            if (charTarget.IsDead)
+            {
+                l_AttackTarget.Remove(targetAttack);
+            }
+        }
+        if (currentState != null)
+        {
+            currentState.OnExecute(this);
+        }
+    }
+
+    public bool IsHaveTargetInRange()
+    {
+        if (L_AttackTarget.Count > 0)
+        {
+            targetAttack = l_AttackTarget[Random.Range(0, l_AttackTarget.Count)];
+            return true;
+
+        }
+        return false;
+        //Debug.Log("da co Enermy trong Range");
+    }
+
+    
 
     public void Despawn()
     {
@@ -161,6 +164,14 @@ public class Bot : Character
         //}
     }
 
-
+    [SerializeField] GameObject circleTarget;
+    public void EnableCircleTarget()
+    {
+        circleTarget.SetActive(true);
+    }
+    public void UnEnableCircleTarget()
+    {
+        circleTarget.SetActive(false);
+    }
 
 }

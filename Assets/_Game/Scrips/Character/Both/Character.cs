@@ -17,7 +17,7 @@ public class Character : MonoBehaviour
     //bullet
     [SerializeField] GameObject bulletPrefab;
     [SerializeField] protected Transform throwPoint;
-    
+
     //doi tuong va cham
     private Collider characterCollider;
     public Collider CharacterCollider { get => characterCollider; set => characterCollider = value; }
@@ -27,7 +27,7 @@ public class Character : MonoBehaviour
     //parameter
     protected float waitThrow = 0.4f;
     protected bool isReadyAttack = false;
-    protected float attackTime = 2f;
+    protected float attackTime = 1f;
     protected float timer = 0;
     protected float delayAttack = 0.1f;
 
@@ -94,10 +94,10 @@ public class Character : MonoBehaviour
         intialRadiusSightZone = sightZone.radius;
     }
 
-    virtual protected  void Update() { }
-    
+    virtual protected void Update() { }
+
     public virtual void Run() { }
-    
+
     public virtual void OnInit()
     {
         point = 0;
@@ -115,6 +115,7 @@ public class Character : MonoBehaviour
     public virtual void OnDeath()
     {
         StopAllCoroutines();
+		SoundManager2.GetInstance().PlaySound(Constan.DEATH_MUSIC_NAME);
         ChangeAnim(Constan.ANIM_DEAD);
         IsDead = true;
     }
@@ -123,7 +124,7 @@ public class Character : MonoBehaviour
     {
         //dinh huong den doi tuong
         //tinh khoang cach tu diem ban toi doi tuong
-        SetTargetDirect(targetAttack.transform.position); 
+        SetTargetDirect(targetAttack.transform.position);
         ChangeAnim(Constan.ANIM_ATTACK);
         isReadyAttack = false;
         Vector3 direct = throwPoint.position - transform.position;
@@ -131,7 +132,7 @@ public class Character : MonoBehaviour
 
     }
 
-    public IEnumerator Throw(Vector3 direct) 
+    public IEnumerator Throw(Vector3 direct)
     {
         //thoi gian tre khi nem
         //lay bullet tu pooling tai vi tri 
@@ -140,9 +141,9 @@ public class Character : MonoBehaviour
         //nang Scale
         yield return new WaitForSeconds(waitThrow);
         weaponHold.SetActive(false);
-        SoundManager.GetInstance().PlayOneShot(SoundManager.GetInstance().attackSound);
-        
-        Bullet bullet = PoolingPro.GetInstance().GetFromPool(currentWeapon.ToString(),throwPoint.position).GetComponent<Bullet>();
+        //SoundManager.GetInstance().PlayOneShot(SoundManager.GetInstance().attackSound);
+		SoundManager2.GetInstance().PlaySound("Nem vu khi");
+        Bullet bullet = PoolingPro.GetInstance().GetFromPool(currentWeapon.ToString(), throwPoint.position).GetComponent<Bullet>();
         bullet.tagWeapon = currentWeapon;
         bullet.TF.rotation = transform.rotation;
         bullet/*.GetComponent<Rigidbody>()*/.AddForce(direct.x * _forceThrow, 0, direct.z * _forceThrow);
@@ -151,7 +152,7 @@ public class Character : MonoBehaviour
         yield return new WaitForSeconds(attackTime * 0.5f);
         weaponHold.SetActive(true);
 
-        
+
     }
 
     //Anim
@@ -159,7 +160,7 @@ public class Character : MonoBehaviour
     [SerializeField] Animator anim;
     public void ChangeAnim(string animName)
     {
-        
+
         if (currentAnimName != animName)
         {
             anim.ResetTrigger(animName);
@@ -174,8 +175,9 @@ public class Character : MonoBehaviour
     public void ChangeEquipment(WeaponType weapon)
     {
         SetWeapon(weapon);
+       
     }
-    
+
     public void SetWeapon(WeaponType weapon)
     {
         PoolingPro.GetInstance().ReturnToPool(PoolingPro.GetInstance().weaponHolds[currentWeapon].ToString(), weaponHold);
@@ -183,6 +185,8 @@ public class Character : MonoBehaviour
         this.weaponHold = PoolingPro.GetInstance().GetFromPool(PoolingPro.GetInstance().weaponHolds[weapon].ToString(), weaponPos.position);
         //TODO: cache transform
         this.weaponHold.transform.SetParent(weaponPos);
+        this.weaponHold.transform.rotation = new Quaternion(0, 0, 0, 0);
+        //this.WeaponHoldTransform.SetParent(weaponPos);
         SightZoneTransform.localScale = new Vector3(1f, 1f, 1f) * StaticData.RangeWeapon[weapon];
     }
 
@@ -194,6 +198,33 @@ public class Character : MonoBehaviour
             GameManager.GetInstance().cameraFollow.Offset += new Vector3(0, 1 - 1);
         }
         TF.localScale = Vector3.one * this.point * 0.1f + Vector3.one;
+    }
+
+    protected Material currentPantMaterial;
+    [SerializeField] protected SkinnedMeshRenderer pantMeshRender;
+    public void SetPant(Material material)
+    {
+        currentPantMaterial = material;
+        pantMeshRender.material = material;
+    }
+
+    [SerializeField] protected Head currentHead;
+    [SerializeField] protected GameObject headShow;
+    [SerializeField] protected Transform headPos;
+    public void SetHead(Head head)
+    {
+        try
+        {
+            PoolingPro.GetInstance().ReturnToPool(currentHead.ToString(), headShow);
+        }
+        catch
+        {
+            //Debug.Log("L?i Thu h?i Head");
+        }
+        this.currentHead = head;
+        this.headShow = PoolingPro.GetInstance().GetFromPool(currentHead.ToString(), headPos.position);
+        headShow.transform.SetParent(headPos);
+        headShow.transform.rotation = new Quaternion(0, 0, 0, 0);
     }
 
 }

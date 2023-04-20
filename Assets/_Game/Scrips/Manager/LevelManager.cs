@@ -36,5 +36,9 @@ public class LevelManager : Singleton<LevelManager>
         //UIManager.GetInstance().HideLose();
     }
 
-    
+    public void ClearCurrentLevel()
+    {
+        Destroy(currentLevel.gameObject);
+    }
+
 }
