@@ -1530,7 +1530,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 80
   m_CollisionDetection: 0
 --- !u!114 &4533055507942590846
 MonoBehaviour:
@@ -1551,7 +1551,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 2031860895177601055, guid: 1b1251c7cd1c8b34ea30386c4e5ce4ac, type: 3}
   throwPoint: {fileID: 4533055508957963280}
   l_AttackTarget: []
-  currentWeapon: 2
+  currentWeapon: 0
   rangeDetect: 5
   sightZone: {fileID: 4533055507629215816}
   weaponPos: {fileID: 7692370209308337943}

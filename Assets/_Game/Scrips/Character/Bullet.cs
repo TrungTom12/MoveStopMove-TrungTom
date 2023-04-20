@@ -90,7 +90,7 @@ public class Bullet : MonoBehaviour
             //other.GetComponent<Player>().OnDeath();
             Cache.GetCharacter(other).OnDeath();
             owner.UpPoint(1);
-            SoundManager.GetInstance().PlayOneShot(SoundManager.GetInstance().killSound);
+            //SoundManager.GetInstance().PlayOneShot(SoundManager.GetInstance().killSound);
 
         }
 
@@ -99,7 +99,7 @@ public class Bullet : MonoBehaviour
             PoolingPro.GetInstance().ReturnToPool(tagWeapon.ToString(), gameObject);
             other.GetComponent<Bot>().ChangeState(new DieState());
             owner.UpPoint(1);
-            SoundManager.GetInstance().PlayOneShot(SoundManager.GetInstance().killSound);
+            //SoundManager.GetInstance().PlayOneShot(SoundManager.GetInstance().killSound);
             
             if (owner is Player)
             {

@@ -3524,6 +3524,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas - GamePlay
       objectReference: {fileID: 0}
+    - target: {fileID: 8866946642011999565, guid: 1d6d158f87bd0ae4ca58bb00d2ad126a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1d6d158f87bd0ae4ca58bb00d2ad126a, type: 3}
 --- !u!1001 &3941150455171074499
@@ -3585,14 +3589,6 @@ PrefabInstance:
       propertyPath: m_SizeDelta.x
       value: -1063
       objectReference: {fileID: 0}
-    - target: {fileID: 5288391796706104975, guid: 9960b577dcf2a1448b97c8d7b018548a, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 490.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 5288391796947427100, guid: 9960b577dcf2a1448b97c8d7b018548a, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5288391796947427103, guid: 9960b577dcf2a1448b97c8d7b018548a, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -3628,18 +3624,6 @@ PrefabInstance:
     - target: {fileID: 5288391796947427103, guid: 9960b577dcf2a1448b97c8d7b018548a, type: 3}
       propertyPath: m_SizeDelta.y
       value: 1920
-      objectReference: {fileID: 0}
-    - target: {fileID: 5288391796947427103, guid: 9960b577dcf2a1448b97c8d7b018548a, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5288391796947427103, guid: 9960b577dcf2a1448b97c8d7b018548a, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5288391796947427103, guid: 9960b577dcf2a1448b97c8d7b018548a, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5288391796947427103, guid: 9960b577dcf2a1448b97c8d7b018548a, type: 3}
       propertyPath: m_LocalPosition.x

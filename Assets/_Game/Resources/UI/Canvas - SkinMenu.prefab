@@ -249,7 +249,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &5762060503642834002
 RectTransform:
   m_ObjectHideFlags: 0
@@ -268,7 +268,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -250, y: -760}
+  m_AnchoredPosition: {x: -250, y: -850}
   m_SizeDelta: {x: 350, y: 130}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1747286070031238810
@@ -615,8 +615,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -360}
-  m_SizeDelta: {x: 1080, y: 1200}
+  m_AnchoredPosition: {x: 0, y: -457.25873}
+  m_SizeDelta: {x: 1080, y: 1001.6364}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4171831251731569702
 CanvasRenderer:
@@ -1008,7 +1008,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5288391795043821669}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -1725,7 +1725,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5288391795845666481}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -1791,7 +1791,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5288391795651146446}
   m_HandleRect: {fileID: 5288391795651146447}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -2478,7 +2478,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &5288391796742074603
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2498,7 +2498,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 250, y: -760}
+  m_AnchoredPosition: {x: 250, y: -850}
   m_SizeDelta: {x: 350, y: 130}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5288391796742074600
@@ -2741,7 +2741,7 @@ RectTransform:
   m_GameObject: {fileID: 5288391796947427168}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5288391794905137379}
@@ -2832,31 +2832,16 @@ MonoBehaviour:
   priceText: {fileID: 9077865334290254427}
   equipButtonPrefabs: {fileID: 4303666068083383436, guid: 70f215ef6eaf19d49b66ceed1aa7f874, type: 3}
   headTextures:
-  - {fileID: 2800000, guid: c4d896691829b2642a2bedbf10af4d37, type: 3}
-  - {fileID: 2800000, guid: 46fc94cb60da5f7429ea519116b534aa, type: 3}
-  - {fileID: 2800000, guid: 76098fa11ef7fa9449e675c30be77076, type: 3}
-  - {fileID: 2800000, guid: 9a97ad42f7641644ba75be8a05f3f9f5, type: 3}
-  - {fileID: 2800000, guid: e39521d3b640a5d4aabdcb304904430e, type: 3}
-  - {fileID: 2800000, guid: de9be8f1f2c31804bbc0ca2fb8899338, type: 3}
   - {fileID: 2800000, guid: bbabf1f25190c9145871bf4b582bfd7a, type: 3}
   - {fileID: 2800000, guid: 627246872ed4c8b4da3f5aac3d37e265, type: 3}
   pantTextures:
   - {fileID: 2800000, guid: 47c8d5358d60d474388d6a7e89a221aa, type: 3}
   - {fileID: 2800000, guid: 60bbae7447731bc4f8f7921a7b846832, type: 3}
-  - {fileID: 2800000, guid: e4d349a1e99479b42882cbf208c4e894, type: 3}
-  - {fileID: 2800000, guid: e6cdcdd7f2a0d8b4fb11ca94d0d7d775, type: 3}
-  - {fileID: 2800000, guid: e119361a0d7fd344eb37842037719c31, type: 3}
-  - {fileID: 2800000, guid: f5d61e52e0c02c7499cc3e23eb8c7f3f, type: 3}
-  - {fileID: 2800000, guid: 006435c12055ced4384c81603df71e0e, type: 3}
-  - {fileID: 2800000, guid: e97fa78b135de6144a5983996978204a, type: 3}
-  - {fileID: 2800000, guid: 26709d5737c6d6e4b90ed4b589a29b6b, type: 3}
   skinTextures:
   - {fileID: 2800000, guid: 52857bc5077499944bfa11b410536589, type: 3}
   - {fileID: 2800000, guid: 656946f6d6e81664c92d62f5f4abdd30, type: 3}
-  - {fileID: 2800000, guid: 0d7f2293d9b0bcf4da786c22f5da03fa, type: 3}
-  - {fileID: 2800000, guid: f81942463fb59f1458a43dfae7e2d88e, type: 3}
-  - {fileID: 2800000, guid: c466d6539cb38f749b8e58427ca3b335, type: 3}
   armSkinTextures:
+  - {fileID: 2800000, guid: ae934b1f00f3a5043b503b68f01450cc, type: 3}
   - {fileID: 2800000, guid: ae934b1f00f3a5043b503b68f01450cc, type: 3}
   buttonBuy: {fileID: 5288391796742074604}
   buttonEquip: {fileID: 1763932241831854078}
@@ -2899,7 +2884,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -271}
+  m_AnchoredPosition: {x: 0, y: -435}
   m_SizeDelta: {x: 1080, y: 700}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5288391796982385925
