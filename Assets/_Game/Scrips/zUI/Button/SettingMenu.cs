@@ -29,4 +29,10 @@ public class SettingMenu : UICanvas
     {
         SoundManager2.GetInstance().SwitchMusicEffect();
     }
+
+    public void QuitButton()
+    {
+        NewUIManager.GetInstance().OpenUI<MainMenu>();
+        Close(0);
+    }
 }

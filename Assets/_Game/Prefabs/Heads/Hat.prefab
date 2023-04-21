@@ -96,13 +96,17 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -1504981713932161579, guid: f41c08491d7377d4485a120303447111, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: f41c08491d7377d4485a120303447111, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 9cd116b1cf9e5574d84a08cb46b29008, type: 2}
+      objectReference: {fileID: 2100000, guid: fdd1705118ee76641a362635c6ff4e78, type: 2}
     - target: {fileID: -1504981713932161579, guid: f41c08491d7377d4485a120303447111, type: 3}
       propertyPath: m_Materials.Array.data[1]
       value: 
-      objectReference: {fileID: 2100000, guid: 748339f6e4f05dd4f860e67ba4fb1928, type: 2}
+      objectReference: {fileID: 2100000, guid: fdd1705118ee76641a362635c6ff4e78, type: 2}
     - target: {fileID: -927199367670048503, guid: f41c08491d7377d4485a120303447111, type: 3}
       propertyPath: m_Name
       value: Hat

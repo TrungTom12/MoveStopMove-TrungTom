@@ -36,7 +36,7 @@ public class Bot : Character
 
         for (int i = 0; i < l_targetFollow.Count; i++)
         {
-            if (!l_targetFollow[i].GetComponent<Character>().IsDead)
+            if (!l_targetFollow[i].GetComponent<Character>().IsDead && l_targetFollow[i].gameObject.activeSelf)
             {
                 targets.Add(l_targetFollow[i]);
             }

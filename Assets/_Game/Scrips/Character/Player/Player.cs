@@ -34,19 +34,54 @@ public class Player : Character
         ChangeAnim(Constan.ANIM_IDLE);
 
         ChangeEquipment(StaticData.WeaponEnum[SaveLoadManager.GetInstance().Data1.WeaponCurrent]);
+		Equip();
+        
+    }
+
+    public void Equip()
+    {
+        RemoveAllEquip();
+        try
+        {
+            SetFullSet(StaticData.SetEnum[SaveLoadManager.GetInstance().Data1.SetCurrent]);
+        }
+        catch
+        {
+            Debug.Log("No Set");
+        }
+		
         int index = SaveLoadManager.GetInstance().Data1.IdPantMaterialCurrent;
+
         if (index > 0)
             SetPant(PoolingPro.GetInstance().pantMaterials[index - 1]);
         else
         {
-            SetPant(PoolingPro.GetInstance().pantMaterials[0]);
+            Debug.Log("No Pant");
         }
-
-        SetHead(StaticData.HeadEnum[SaveLoadManager.GetInstance().Data1.HeadCurrent]);
+        try
+        {
+            SetHead(StaticData.HeadEnum[SaveLoadManager.GetInstance().Data1.HeadCurrent]);
+        }
+        catch
+        {
+            Debug.Log("No Head ");
+        }
+        try
+        {
+            SetShield(StaticData.ShieldEnum[SaveLoadManager.GetInstance().Data1.ShieldCurent]);
+        }
+        catch
+        {
+            Debug.Log("No Shield");
+        }
     }
 
     protected override void Update()
     {
+        if (_joystick == null)
+        {
+            return;
+        }
 
         if (_state is PlayerState.Dead)
         {
@@ -58,6 +93,7 @@ public class Player : Character
             }
             return;
         }
+
         if (_state is PlayerState.Attacked)
         {
             return;
@@ -67,11 +103,11 @@ public class Player : Character
         {
             targetAttack.GetComponent<Bot>().EnableCircleTarget();
         }
+
         if (!L_AttackTarget.Contains(targetAttack) & targetAttack != null)
         {
             targetAttack.GetComponent<Bot>().UnEnableCircleTarget();
         }
-
 
         Run();
         //neu muc tieu da xác dinh va chet thi loai bo va chon random tu danh sach neu con 
@@ -81,6 +117,7 @@ public class Player : Character
             if (l_AttackTarget.Count > 0)
                 targetAttack = l_AttackTarget[Random.Range(0, l_AttackTarget.Count)];
         }
+
         if (l_AttackTarget.Count > 0)
         {
 
@@ -101,10 +138,7 @@ public class Player : Character
 
     public override void Run()
     {
-		if (_joystick == null)
-        {
-            return;
-        }
+		
         base.Run();
         moveVector = Vector3.zero;
         moveVector.x = _joystick.Horizontal * _moveSpeed * Time.deltaTime;
@@ -137,20 +171,6 @@ public class Player : Character
         transform.position = Vector3.Lerp(transform.position, transform.position + moveVector, 1f);
     }
 
-    public override void OnDeath()
-    {
-        if (_state is PlayerState.Dead)
-        {
-            return;
-        }
-        
-        _state = PlayerState.Dead;
-        base.OnDeath();
-		
-		SoundManager2.GetInstance().PlaySound(Constan.LOSE_MUSIC_NAME);
-        base.OnDeath();
-    }
-
     //Attack
     IEnumerator ResetAttack()
     {
@@ -176,4 +196,19 @@ public class Player : Character
         StartCoroutine(ActiveAttack());
         StartCoroutine(ResetAttack());
     }
+
+    public override void OnDeath()
+    {
+        if (_state is PlayerState.Dead)
+        {
+            return;
+        }
+
+        _state = PlayerState.Dead;
+        //base.OnDeath();
+
+        SoundManager2.GetInstance().PlaySound(Constan.LOSE_MUSIC_NAME);
+        base.OnDeath();
+    }
+
 }

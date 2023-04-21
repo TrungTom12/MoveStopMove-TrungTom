@@ -13,6 +13,8 @@ public class Constan
     public const string TAG_BOT = "Bot";
     public const string TAG_PLAYER = "Player";
     public const string TAG_OBSTACLE = "Obstacle";
+	public const string ANIM_OPEN = "open";
+	public const string ANIM_CLOSE = "close";
     public const string SAVE_FILE_NAME = "savegame.ss";
 
     public const string BACKGROUND_VOLUME = "BackgroundVolume";

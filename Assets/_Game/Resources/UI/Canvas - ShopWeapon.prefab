@@ -512,7 +512,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4458653334768217093}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -561.7, y: -960, z: -5}
+  m_LocalPosition: {x: -600, y: -960, z: -5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -753,7 +753,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4458653335220247315}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -561.84, y: -960, z: 5}
+  m_LocalPosition: {x: -600, y: -960, z: 5}
   m_LocalScale: {x: 4, y: 4, z: 4}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -1603,7 +1603,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &8893881400703683329
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1611,7 +1611,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8893881400703683328}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1705,6 +1705,8 @@ MonoBehaviour:
   weaponName: {fileID: 4458653334782308530}
   weaponPrice: {fileID: 1065082976647494166}
   weaponShowPos: {fileID: 1358349598059542738}
+  ButtonBuy: {fileID: 8893881401986883811}
+  ButtonEquip: {fileID: 8893881401912686219}
 --- !u!1 &8893881400835138779
 GameObject:
   m_ObjectHideFlags: 0

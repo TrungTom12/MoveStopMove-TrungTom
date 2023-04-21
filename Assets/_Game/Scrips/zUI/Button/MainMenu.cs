@@ -47,4 +47,9 @@ public class MainMenu : UICanvas
         base.Close(delayTime);
 
     }
+
+    public void MusicButton()
+    {
+        SoundManager2.GetInstance().SwitchSoundBackGround();
+    }
 }

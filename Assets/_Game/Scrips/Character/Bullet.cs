@@ -91,6 +91,7 @@ public class Bullet : MonoBehaviour
             Cache.GetCharacter(other).OnDeath();
             owner.UpPoint(1);
             //SoundManager.GetInstance().PlayOneShot(SoundManager.GetInstance().killSound);
+			Cache.GetCharacter(other).BloodSystem.Play();
 
         }
 
@@ -106,6 +107,7 @@ public class Bullet : MonoBehaviour
                 SaveLoadManager.GetInstance().Data1.Coin += 1;
                 SaveLoadManager.GetInstance().Save();
             }
+			Cache.GetCharacter(other).BloodSystem.Play();
         }
 
     }

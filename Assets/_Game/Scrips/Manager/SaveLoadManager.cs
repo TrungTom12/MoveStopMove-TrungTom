@@ -3,8 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
-using Unity.VisualScripting;
-using UnityEditor.Search;
 using UnityEngine;
 
 public class SaveLoadManager : Singleton<SaveLoadManager>
@@ -22,6 +20,8 @@ public class SaveLoadManager : Singleton<SaveLoadManager>
             WeaponOwners = new List<WeaponType>();
             PantOwners = new List<int>();
             HeadOwners = new List<string>();
+			ShieldOwners = new List<string>();
+            SetOwners = new List<string>();
             EquipOwners = new List<Equipment>();
             LevelID = 1;
         }
@@ -29,9 +29,13 @@ public class SaveLoadManager : Singleton<SaveLoadManager>
         public string WeaponCurrent { get; set; }
 
         public string HeadCurrent { get; set; }
+		public string ShieldCurent { get; set; }
+        public string SetCurrent { get; set; }
         public List<WeaponType> WeaponOwners { get; set; }
         public List<int> PantOwners { get; set; }
         public List<string> HeadOwners { get; set; }
+		public List<string> ShieldOwners { get; set; }
+        public List<string> SetOwners { get; set; }
         public List<Equipment> EquipOwners;
         public int Coin { get; set; }
 
@@ -70,9 +74,9 @@ public class SaveLoadManager : Singleton<SaveLoadManager>
             try
             {
                 data = (Data)formatter.Deserialize(file);
-                if (data.Coin < 300)
+                if (data.Coin < 1000)
                 {
-                    data.Coin = 999;
+                    data.Coin = 9999;
                 }
                 if (data.WeaponCurrent == "")
                 {
@@ -97,6 +101,14 @@ public class SaveLoadManager : Singleton<SaveLoadManager>
                 if (data.HeadCurrent == null)
                 {
                     data.HeadCurrent = "Head1";
+				}
+                if (data.ShieldOwners == null)
+                {
+                    data.ShieldOwners = new List<string>();
+                }
+                if (data.SetOwners == null)
+                {
+                    data.SetOwners = new List<string>();
                 }
                 Debug.Log(data.Coin);
                 Debug.Log(data.WeaponCurrent);

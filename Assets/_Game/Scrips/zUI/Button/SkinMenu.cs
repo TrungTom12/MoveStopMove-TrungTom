@@ -72,9 +72,18 @@ public class SkinMenu : UICanvas
             }
             if (choiceButton is ChoiceButton.Head)
             {
-                Debug.Log(currentEquipment.Name);
+                //Debug.Log(currentEquipment.Name);
                 SaveLoadManager.GetInstance().Data1.HeadOwners.Add(currentEquipment.Name);
-                Debug.Log(SaveLoadManager.GetInstance().Data1.HeadOwners[SaveLoadManager.GetInstance().Data1.HeadOwners.Count - 1]);
+			}
+            if(choiceButton is ChoiceButton.Shield)
+            {
+                SaveLoadManager.GetInstance().Data1.ShieldOwners.Add(currentEquipment.Name);
+
+            }
+            if(choiceButton is ChoiceButton.Set)
+            {
+				//Debug.Log(SaveLoadManager.GetInstance().Data1.HeadOwners[SaveLoadManager.GetInstance().Data1.HeadOwners.Count - 1]);
+                SaveLoadManager.GetInstance().Data1.SetOwners.Add(currentEquipment.Name);
             }
             buttonBuy.SetActive(false);
             buttonEquip.SetActive(true);
@@ -97,6 +106,17 @@ public class SkinMenu : UICanvas
         {
             SaveLoadManager.GetInstance().Data1.HeadCurrent = currentEquipment.Name;
         }
+		if (choiceButton is ChoiceButton.Shield)
+        {
+            SaveLoadManager.GetInstance().Data1.ShieldCurent = currentEquipment.Name;
+        }
+        if(choiceButton is ChoiceButton.Set)
+        {
+            SaveLoadManager.GetInstance().Data1.IdPantMaterialCurrent = currentEquipment.IdPant;
+            SaveLoadManager.GetInstance().Data1.HeadCurrent = currentEquipment.HeadName;
+            SaveLoadManager.GetInstance().Data1.ShieldCurent = currentEquipment.ShieldName;
+            SaveLoadManager.GetInstance().Data1.SetCurrent = currentEquipment.Name;
+        }
         SaveLoadManager.GetInstance().Save();
     }
 
@@ -104,7 +124,7 @@ public class SkinMenu : UICanvas
     {
         ClearButton();
         NewUIManager.GetInstance().OpenUI<MainMenu>();
-        Close(0);
+        Close(0.5f);
     }
     public void SetCoinText(int coin)
     {
@@ -128,8 +148,9 @@ public class SkinMenu : UICanvas
         ClearButton();
         for (int i = 0; i < textures.Count; i++)
         {
-            equipButtonPrefabs.GetComponent<RawImage>().texture = textures[i];
+            //equipButtonPrefabs.GetComponent<RawImage>().texture = textures[i];
             EquipButton button = Instantiate(equipButtonPrefabs, scrollView).GetComponent<EquipButton>();
+			button.EquipImage.texture = textures[i];
             button.SetSkinMenu(this);
             equipButtons.Add(button);
             equipButtons[i].EquipmentInfor = equipments[i];

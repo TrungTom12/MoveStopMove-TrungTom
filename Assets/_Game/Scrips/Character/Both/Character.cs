@@ -38,15 +38,41 @@ public class Character : MonoBehaviour
     //Weapon
     [SerializeField] protected WeaponType currentWeapon;
 
-
     [SerializeField] private float rangeDetect;
     private float intialRadiusSightZone;
     [SerializeField] SphereCollider sightZone;
 
+    //TypeShop
+    //Weapon
     [SerializeField] protected Transform weaponPos;
     [SerializeField] protected GameObject weaponHold;
+    //Head
+    [SerializeField] protected HeadType currentHead;
+    [SerializeField] protected GameObject headShow;
+    [SerializeField] protected Transform headPos;
+    //Paint
+    protected Material currentPantMaterial;
+    [SerializeField] protected SkinnedMeshRenderer pantMeshRender;
+    //Shield
+    [SerializeField] protected ShieldType currentShield;
+    [SerializeField] protected GameObject shieldShow;
+    [SerializeField] protected Transform shieldPos;
+    //Wing
+    [SerializeField] protected Transform wingPos;
+    [SerializeField] protected GameObject wingShow;
+    [SerializeField] protected WingType currentWingType;
+    //Tail
+    [SerializeField] protected TailType currentTailType;
+    [SerializeField] protected GameObject tailShow;
+    [SerializeField] protected Transform tailPos;
+    //SetType
+    [SerializeField] protected SetType currentSetType;
+    [SerializeField] protected ParticleSystem bloodSystem;
+    [SerializeField] protected SkinnedMeshRenderer colorSkin;
+    [SerializeField] protected Material defaultMaterial;
 
-    //TF
+
+    //TF - cache
     private Transform tf;
     private Transform weaponHoldTransform;
     private Transform sightZoneTransform;
@@ -86,6 +112,7 @@ public class Character : MonoBehaviour
         }
     }
 
+	public ParticleSystem BloodSystem { get => bloodSystem; set => bloodSystem = value; }
     public bool IsDead = false;
 
     protected virtual void Start()
@@ -152,7 +179,6 @@ public class Character : MonoBehaviour
         yield return new WaitForSeconds(attackTime * 0.5f);
         weaponHold.SetActive(true);
 
-
     }
 
     //Anim
@@ -200,18 +226,24 @@ public class Character : MonoBehaviour
         TF.localScale = Vector3.one * this.point * 0.1f + Vector3.one;
     }
 
-    protected Material currentPantMaterial;
-    [SerializeField] protected SkinnedMeshRenderer pantMeshRender;
+    //Clother
+
     public void SetPant(Material material)
     {
+        if (material == null)
+        {
+            pantMeshRender.gameObject.SetActive(false);
+        }
+        else
+        {
+            pantMeshRender.gameObject.SetActive(true);
+        }
         currentPantMaterial = material;
         pantMeshRender.material = material;
     }
 
-    [SerializeField] protected Head currentHead;
-    [SerializeField] protected GameObject headShow;
-    [SerializeField] protected Transform headPos;
-    public void SetHead(Head head)
+
+    public void SetHead(HeadType head)
     {
         try
         {
@@ -226,5 +258,147 @@ public class Character : MonoBehaviour
         headShow.transform.SetParent(headPos);
         headShow.transform.rotation = new Quaternion(0, 0, 0, 0);
     }
+
+    public void SetShield(ShieldType shield)
+    {
+        try
+        {
+            PoolingPro.GetInstance().ReturnToPool(currentShield.ToString(), shieldShow);
+        }
+        catch
+        {
+            //Debug.Log("Can not Return Shield");
+        }
+        this.currentShield = shield;
+        this.shieldShow = PoolingPro.GetInstance().GetFromPool(currentShield.ToString(), shieldPos.position);
+        shieldShow.transform.SetParent(shieldPos);
+        shieldShow.transform.rotation = new Quaternion(0, 0, 0, 0);
+    }
+
+    public void SetWing(WingType wing)
+    {
+        try
+        {
+            PoolingPro.GetInstance().ReturnToPool(currentWingType.ToString(), wingShow);
+        }
+        catch
+        {
+        }
+        this.currentWingType = wing;
+        this.wingShow = PoolingPro.GetInstance().GetFromPool(currentWingType.ToString(), wingPos.position);
+        wingShow.transform.SetParent(wingPos);
+        wingShow.transform.rotation = new Quaternion(0, 0, 0, 0);
+    }
+
+    public void SetTail(TailType tail)
+    {
+        try
+        {
+            PoolingPro.GetInstance().ReturnToPool(currentTailType.ToString(), tailShow);
+        }
+        catch
+        {
+        }
+        this.currentTailType = tail;
+        this.tailShow = PoolingPro.GetInstance().GetFromPool(currentTailType.ToString(), tailPos.position);
+        tailShow.transform.SetParent(tailPos);
+        tailShow.transform.rotation = new Quaternion(0, 0, 0, 0);
+    }
+
+    public void SetFullSet(SetType set)
+    {
+        RemoveAllEquip();
+        currentSetType = set;
+        Equipment infor = PoolingPro.GetInstance().SetValue[set];
+
+        try
+        {
+            SetPant(PoolingPro.GetInstance().pantMaterials[infor.IdPant - 1]);
+        }
+
+        catch
+        {
+            SetPant(null);
+        }
+
+        if (infor.HeadName != null)
+        {
+            SetHead(StaticData.HeadEnum[infor.HeadName]);
+        }
+
+        if (infor.WingName != null)
+        {
+            SetWing(StaticData.WingEnum[infor.WingName]);
+        }
+
+        if (infor.TailName != null)
+        {
+            SetTail(StaticData.TailEnum[infor.TailName]);
+        }
+
+        if (infor.ShieldName != null)
+        {
+            SetShield(StaticData.ShieldEnum[infor.ShieldName]);
+        }
+
+        if (infor.IdColor > 0)
+        {
+            SetColorSkin(PoolingPro.GetInstance().characterMaterial[infor.IdColor - 1]);
+        }
+
+    }
+
+    public void SetColorSkin(Material material)
+    {
+        colorSkin.material = material;
+    }
+
+    public void RemoveAllEquip()
+    {
+        try
+        {
+            PoolingPro.GetInstance().ReturnToPool(currentTailType.ToString(), tailShow);
+        }
+
+        catch
+        {
+
+        }
+
+        try
+        {
+            PoolingPro.GetInstance().ReturnToPool(currentWingType.ToString(), wingShow);
+        }
+
+        catch
+        {
+
+        }
+
+        try
+        {
+            PoolingPro.GetInstance().ReturnToPool(currentShield.ToString(), shieldShow);
+        }
+
+        catch
+        {
+            //Debug.Log("Can not Return Shield");
+        }
+
+        try
+        {
+            PoolingPro.GetInstance().ReturnToPool(currentHead.ToString(), headShow);
+        }
+
+        catch
+        {
+            //Debug.Log("L?i Thu h?i Head");
+        }
+
+        colorSkin.material = defaultMaterial;
+
+    }
+
+
 
 }

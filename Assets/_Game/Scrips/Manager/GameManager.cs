@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -27,15 +27,15 @@ public class GameManager : Singleton<GameManager>
         //base.Awake();
         SaveLoadManager.GetInstance().OnInit();
 
-        Input.multiTouchEnabled = false;
+        Input.multiTouchEnabled = false; // tắt tính năng chặn đa điểm
         Application.targetFrameRate = 60;
-        Screen.sleepTimeout = SleepTimeout.NeverSleep;
+        Screen.sleepTimeout = SleepTimeout.NeverSleep; // thiết lập màn hình không tắt khi đang chạy 
 
         int maxScreenHeight = 1280;
-        float ratio = (float)Screen.currentResolution.width / (float)Screen.currentResolution.height;
+        float ratio = (float)Screen.currentResolution.width / (float)Screen.currentResolution.height; // tính tỉ lệ chiều dài và rộng của màn hình 
         if (Screen.currentResolution.height > maxScreenHeight)
         {
-            Screen.SetResolution(Mathf.RoundToInt(ratio * (float)maxScreenHeight), maxScreenHeight, true);
+            Screen.SetResolution(Mathf.RoundToInt(ratio * (float)maxScreenHeight), maxScreenHeight, true); // thiết lập độ phân giải 
         }
 
 

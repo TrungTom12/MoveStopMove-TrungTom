@@ -13,14 +13,34 @@ public enum WeaponShow
     AxeShow, KnifeShow, BoomerangShow, CandyShow,
 }
 
-public enum Pant
+public enum PantType
 {
-    Pant1, Pant2
+    Pant1, Pant2,
 }
 
-public enum Head
+public enum HeadType
 {
-    Head1, Head2
+    Head1, Head2, Horn, head_angel, ArrowHead, Cowboy, Crown, HatCap, HatYellow, HeadPhone, HatWitch, Hat_Thor
+}
+
+public enum ShieldType
+{
+    Shield1, Shield2, bow_angel, Book, Blade_Death
+}
+
+public enum WingType
+{
+    wing_devil, wing_angel
+}
+
+public enum TailType
+{
+    tail_devil
+}
+
+public enum SetType
+{
+    Set1, Set2, Set3, Set4, Set5
 }
 
 public class PoolingPro : Singleton<PoolingPro>
@@ -45,9 +65,20 @@ public class PoolingPro : Singleton<PoolingPro>
     public Dictionary<WeaponType, WeaponHold> weaponHolds = new Dictionary<WeaponType, WeaponHold>();
     public Dictionary<WeaponType, WeaponShow> weaponShows = new Dictionary<WeaponType, WeaponShow>();
 
+    public List<Material> characterMaterial;
+
     public List<Material> pantMaterials;
-    public Dictionary<Pant,Material> pantMaterial = new Dictionary<Pant, Material>();
-	
+    public Dictionary<PantType,Material> pantMaterial = new Dictionary<PantType, Material>();
+
+    public Dictionary<SetType, Equipment> SetValue = new Dictionary<SetType, Equipment> 
+    {
+        {SetType.Set1, StaticData.setEquipments[0]},
+        {SetType.Set2, StaticData.setEquipments[1]},
+        {SetType.Set3,StaticData.setEquipments[2] },
+        {SetType.Set4,StaticData.setEquipments[3]},
+        {SetType.Set5,StaticData.setEquipments[4] },
+    };
+
     void Start()
     {
         GetInstance();
@@ -66,8 +97,8 @@ public class PoolingPro : Singleton<PoolingPro>
         weaponShows[WeaponType.Boomerang] = WeaponShow.BoomerangShow;
         weaponShows[WeaponType.Candy] = WeaponShow.CandyShow;
 
-        pantMaterial[Pant.Pant1] = pantMaterials[0];
-        pantMaterial[Pant.Pant2] = pantMaterials[1];
+        pantMaterial[PantType.Pant1] = pantMaterials[0];
+        pantMaterial[PantType.Pant2] = pantMaterials[1];
 
         foreach (Pool pool in poolList)
         {

@@ -124,7 +124,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 6904598310082491969}
         m_TargetAssemblyTypeName: SettingMenu, Assembly-CSharp
-        m_MethodName: HomeButton
+        m_MethodName: QuitButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

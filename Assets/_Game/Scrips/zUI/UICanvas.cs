@@ -1,14 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UICanvas : MonoBehaviour
 {
     //public bool IsAvoidBackKey = false;
     public bool IsDestroyOnClose = false;
-
+    ParticleSystem effectButton;
     protected RectTransform m_RectTransform;
     private Animator m_Animator;
+    string currentAnimName;
     private float m_OffsetY = 0;
 
     private void Start()
@@ -58,6 +60,7 @@ public class UICanvas : MonoBehaviour
     public virtual void Open()
     {
         gameObject.SetActive(true);
+        ChangeAnim(Constan.ANIM_OPEN);
     }
 
     //close canvas directly
@@ -77,7 +80,29 @@ public class UICanvas : MonoBehaviour
     //dong canvas sau mot khoang thoi gian delay
     public virtual void Close(float delayTime)
     {
-        Invoke(nameof(CloseDirectly), delayTime);
-    }
 
+        Invoke(nameof(CloseDirectly), delayTime);
+        ChangeAnim(Constan.ANIM_CLOSE);
+    }
+    public void UnEnableEffectButton()
+    {
+        PoolingPro.GetInstance().ReturnToPool("ClickButtonEffect", effectButton.gameObject);
+    }
+    public void EnableEffectButton(Button button)
+    {
+        effectButton = PoolingPro.GetInstance().GetFromPool("ClickButtonEffect", button.transform.position).GetComponent<ParticleSystem>();
+        effectButton.transform.SetParent(FindObjectOfType<CanvasVFX>().transform);
+        effectButton.Play();
+    }
+    public void ChangeAnim(string animName)
+    {
+        if (currentAnimName != animName && m_Animator != null)
+        {
+            m_Animator.ResetTrigger(animName);
+
+            currentAnimName = animName;
+
+            m_Animator.SetTrigger(currentAnimName);
+        }
+    }
 }
