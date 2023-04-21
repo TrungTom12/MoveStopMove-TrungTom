@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.TextCore.Text;
 using UnityEngine.UIElements;
@@ -83,7 +83,7 @@ public class Player : Character
             return;
         }
 
-        if (_state is PlayerState.Dead)
+        if (_state is PlayerState.Dead) //Nếu chết , sau 2s sẽ trả về và thua
         {
             timerDead += Time.deltaTime;
             if (timerDead > 2f)
@@ -98,19 +98,19 @@ public class Player : Character
         {
             return;
         }
-
+        
         if (targetAttack != null)
         {
             targetAttack.GetComponent<Bot>().EnableCircleTarget();
         }
 
-        if (!L_AttackTarget.Contains(targetAttack) & targetAttack != null)
+        if (!L_AttackTarget.Contains(targetAttack) && targetAttack != null) // nếu không co trong list và có target thì unenable
         {
             targetAttack.GetComponent<Bot>().UnEnableCircleTarget();
         }
 
         Run();
-        //neu muc tieu da x�c dinh va chet thi loai bo va chon random tu danh sach neu con 
+        //neu muc tieu da xác dinh va chet thi loai bo va chon random tu danh sach neu con 
         if (targetAttack != null && targetAttack.GetComponent<Character>().IsDead)
         {
             L_AttackTarget.Remove(targetAttack);
@@ -127,7 +127,7 @@ public class Player : Character
 			}
         }
 
-        // xac dinh xem khi n�o co the tan cong muc ti�u 
+        // xac dinh xem khi nào co the tan cong muc tiêu 
         if (l_AttackTarget.Contains(targetAttack) && timer >= delayAttack)
         {
             Attack();

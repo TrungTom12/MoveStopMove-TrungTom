@@ -999,7 +999,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6076737251240108295
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1463,7 +1463,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -40, y: 15}
+  m_AnchoredPosition: {x: 0, y: 15}
   m_SizeDelta: {x: 150, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8893881400300155540
@@ -1507,7 +1507,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 0/1
+  m_Text: Equip
 --- !u!1 &8893881400544381138
 GameObject:
   m_ObjectHideFlags: 0
@@ -1660,10 +1660,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1080, y: 1920}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -1705,8 +1705,8 @@ MonoBehaviour:
   weaponName: {fileID: 4458653334782308530}
   weaponPrice: {fileID: 1065082976647494166}
   weaponShowPos: {fileID: 1358349598059542738}
-  ButtonBuy: {fileID: 8893881401986883811}
-  ButtonEquip: {fileID: 8893881401912686219}
+  ButtonBuy: {fileID: 8893881401912686219}
+  ButtonEquip: {fileID: 8893881401986883811}
 --- !u!1 &8893881400835138779
 GameObject:
   m_ObjectHideFlags: 0
@@ -1931,7 +1931,7 @@ GameObject:
   - component: {fileID: 8893881401912686213}
   - component: {fileID: 8893881401912686233}
   m_Layer: 0
-  m_Name: Button Equid
+  m_Name: Button Buy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2043,7 +2043,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 8893881400703683391}
         m_TargetAssemblyTypeName: WeaponMenu, Assembly-CSharp
-        m_MethodName: EquipButton
+        m_MethodName: BuyButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2066,7 +2066,7 @@ GameObject:
   - component: {fileID: 8893881401986883613}
   - component: {fileID: 8893881401986883601}
   m_Layer: 0
-  m_Name: Button Buy
+  m_Name: Button Equip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2178,7 +2178,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 8893881400703683391}
         m_TargetAssemblyTypeName: WeaponMenu, Assembly-CSharp
-        m_MethodName: BuyButton
+        m_MethodName: EquipButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

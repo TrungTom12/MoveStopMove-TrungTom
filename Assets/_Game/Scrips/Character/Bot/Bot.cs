@@ -54,7 +54,7 @@ public class Bot : Character
     public override void OnInit()
     {
         base.OnInit();
-        foreach (Transform t in GameManager.GetInstance().L_character)
+        foreach (Transform t in GameManager.GetInstance().L_character) //xem vi tri co bang va khác trong list ko thì thêm vào 
         {
             if (!t.Equals(transform) && !l_targetFollow.Contains(t))
                 l_targetFollow.Add(t);
@@ -65,7 +65,7 @@ public class Bot : Character
         ChangeState(new IdleState());
     }
 
-    public void FollowTarget() //neu vi tri diem den hon 1f voi target thi cap nhat cho vi tri diem den 
+    public void FollowTarget() 
     {
         ChangeAnim(Constan.ANIM_RUN);
         if (targetFollow == null)
@@ -73,11 +73,13 @@ public class Bot : Character
             SetRandomTargetFollow();
             return;
         }
+
         if (targetFollow.GetComponent<Character>().IsDead)
         {
             SetRandomTargetFollow();
         }
-        if (Vector3.Distance(destination, targetFollow.position) > 1.0f)
+
+        if (Vector3.Distance(destination, targetFollow.position) > 1.0f) //neu vi tri diem den hon 1f voi target thi cap nhat cho vi tri diem den 
         {
             destination = targetFollow.position;
             agent.destination = destination;

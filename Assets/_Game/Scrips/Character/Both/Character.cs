@@ -168,13 +168,15 @@ public class Character : MonoBehaviour
         //nang Scale
         yield return new WaitForSeconds(waitThrow);
         weaponHold.SetActive(false);
-        //SoundManager.GetInstance().PlayOneShot(SoundManager.GetInstance().attackSound);
 		SoundManager2.GetInstance().PlaySound("Nem vu khi");
         Bullet bullet = PoolingPro.GetInstance().GetFromPool(currentWeapon.ToString(), throwPoint.position).GetComponent<Bullet>();
+
         bullet.tagWeapon = currentWeapon;
         bullet.TF.rotation = transform.rotation;
+
         bullet/*.GetComponent<Rigidbody>()*/.AddForce(direct.x * _forceThrow, 0, direct.z * _forceThrow);
         bullet/*.GetComponent<Bullet>()*/.SetOwner(this);
+
         bullet.TF.localScale *= (1 + 0.1f * point);
         yield return new WaitForSeconds(attackTime * 0.5f);
         weaponHold.SetActive(true);
